@@ -213,6 +213,200 @@ function AnimatedCounter({ value, duration = 1500, suffix = "", decimals = 0 }) 
   );
 }
 
+// --- COMPONENTE: GRÁFICO RAMAN VS SERS ---
+const RamanSERSChart = () => {
+  const [hoveredLine, setHoveredLine] = useState(null);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+
+  // Generar datos de espectro simulado
+  const generateSpectrum = (peaks, baseIntensity, noiseLevel) => {
+    const points = [];
+    for (let i = 0; i <= 100; i++) {
+      let intensity = baseIntensity;
+
+      // Agregar picos
+      peaks.forEach(peak => {
+        const distance = Math.abs(i - peak.position);
+        intensity += peak.height * Math.exp(-Math.pow(distance / peak.width, 2));
+      });
+
+      // Agregar ruido
+      intensity += (Math.random() - 0.5) * noiseLevel;
+
+      points.push({ x: i, y: Math.max(0, intensity) });
+    }
+    return points;
+  };
+
+  // Datos Raman (señal débil)
+  const ramanPeaks = [
+    { position: 20, height: 15, width: 3 },
+    { position: 45, height: 12, width: 4 },
+    { position: 70, height: 18, width: 3.5 },
+    { position: 85, height: 10, width: 3 }
+  ];
+  const ramanData = generateSpectrum(ramanPeaks, 5, 3);
+
+  // Datos SERS (señal amplificada ~100x)
+  const sersPeaks = [
+    { position: 20, height: 80, width: 2.5 },
+    { position: 45, height: 70, width: 3 },
+    { position: 70, height: 95, width: 2.8 },
+    { position: 85, height: 65, width: 2.5 }
+  ];
+  const sersData = generateSpectrum(sersPeaks, 8, 2);
+
+  // Convertir datos a path SVG
+  const dataToPath = (data, scaleY = 1) => {
+    return data.map((point, i) => {
+      const x = (point.x / 100) * 600;
+      const y = 300 - (point.y * scaleY);
+      return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
+    }).join(' ');
+  };
+
+  const ramanPath = dataToPath(ramanData, 2);
+  const sersPath = dataToPath(sersData, 2);
+
+  return (
+    <div ref={ref} className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 rounded-[2.5rem] p-8 relative overflow-hidden">
+      {/* Título y leyenda */}
+      <div className="absolute top-6 left-8 z-10">
+        <h3 className="text-white font-bold text-lg mb-4">Spectral Comparison</h3>
+        <div className="flex flex-col gap-2">
+          <div
+            className="flex items-center gap-2 cursor-pointer transition-opacity"
+            style={{ opacity: hoveredLine === 'sers' || hoveredLine === null ? 1 : 0.4 }}
+            onMouseEnter={() => setHoveredLine('sers')}
+            onMouseLeave={() => setHoveredLine(null)}
+          >
+            <div className="w-8 h-0.5 bg-orange-500"></div>
+            <span className="text-orange-400 text-sm font-semibold">SERS Signal (100× enhanced)</span>
+          </div>
+          <div
+            className="flex items-center gap-2 cursor-pointer transition-opacity"
+            style={{ opacity: hoveredLine === 'raman' || hoveredLine === null ? 1 : 0.4 }}
+            onMouseEnter={() => setHoveredLine('raman')}
+            onMouseLeave={() => setHoveredLine(null)}
+          >
+            <div className="w-8 h-0.5 bg-blue-400"></div>
+            <span className="text-blue-300 text-sm font-semibold">Standard Raman</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Grid de fondo */}
+      <svg className="absolute inset-0 w-full h-full opacity-10">
+        <defs>
+          <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
+
+      {/* Gráfico principal */}
+      <svg
+        viewBox="0 0 650 350"
+        className="w-full h-full relative z-0"
+        style={{ filter: 'drop-shadow(0 0 20px rgba(59, 130, 246, 0.3))' }}
+      >
+        {/* Ejes */}
+        <line x1="40" y1="300" x2="620" y2="300" stroke="rgba(255,255,255,0.2)" strokeWidth="2" />
+        <line x1="40" y1="300" x2="40" y2="30" stroke="rgba(255,255,255,0.2)" strokeWidth="2" />
+
+        {/* Labels */}
+        <text x="330" y="335" fill="rgba(255,255,255,0.5)" fontSize="12" textAnchor="middle" fontFamily="Poppins">
+          Raman Shift (cm⁻¹)
+        </text>
+        <text x="15" y="170" fill="rgba(255,255,255,0.5)" fontSize="12" textAnchor="middle" fontFamily="Poppins" transform="rotate(-90, 15, 170)">
+          Intensity
+        </text>
+
+        {/* Línea Raman (azul) */}
+        <motion.path
+          d={`M 40 300 ${ramanPath}`}
+          fill="none"
+          stroke="rgba(96, 165, 250, 0.8)"
+          strokeWidth={hoveredLine === 'raman' ? "4" : "2.5"}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={isInView ? {
+            pathLength: 1,
+            opacity: hoveredLine === 'sers' ? 0.3 : 1
+          } : {}}
+          transition={{ duration: 2, ease: "easeOut", delay: 0.2 }}
+          style={{
+            filter: hoveredLine === 'raman' ? 'drop-shadow(0 0 8px rgba(96, 165, 250, 0.8))' : 'none'
+          }}
+        />
+
+        {/* Área bajo la curva Raman */}
+        <motion.path
+          d={`M 40 300 ${ramanPath} L 640 300 Z`}
+          fill="url(#ramanGradient)"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: hoveredLine === 'sers' ? 0.1 : 0.2 } : {}}
+          transition={{ duration: 1.5, delay: 0.5 }}
+        />
+
+        {/* Línea SERS (naranja) */}
+        <motion.path
+          d={`M 40 300 ${sersPath}`}
+          fill="none"
+          stroke="rgba(251, 146, 60, 0.9)"
+          strokeWidth={hoveredLine === 'sers' ? "4" : "3"}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={isInView ? {
+            pathLength: 1,
+            opacity: hoveredLine === 'raman' ? 0.3 : 1
+          } : {}}
+          transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
+          style={{
+            filter: hoveredLine === 'sers' ? 'drop-shadow(0 0 12px rgba(251, 146, 60, 0.9))' : 'drop-shadow(0 0 4px rgba(251, 146, 60, 0.5))'
+          }}
+        />
+
+        {/* Área bajo la curva SERS */}
+        <motion.path
+          d={`M 40 300 ${sersPath} L 640 300 Z`}
+          fill="url(#sersGradient)"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: hoveredLine === 'raman' ? 0.1 : 0.3 } : {}}
+          transition={{ duration: 1.5, delay: 0.8 }}
+        />
+
+        {/* Gradientes */}
+        <defs>
+          <linearGradient id="ramanGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="rgba(96, 165, 250, 0.4)" />
+            <stop offset="100%" stopColor="rgba(96, 165, 250, 0)" />
+          </linearGradient>
+          <linearGradient id="sersGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="rgba(251, 146, 60, 0.5)" />
+            <stop offset="100%" stopColor="rgba(251, 146, 60, 0)" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      {/* Indicador de amplificación */}
+      <motion.div
+        className="absolute bottom-6 right-8 bg-orange-500/10 backdrop-blur-sm border border-orange-500/30 rounded-xl px-4 py-2"
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ delay: 2, duration: 0.5 }}
+      >
+        <div className="text-orange-400 font-black text-2xl">100×</div>
+        <div className="text-orange-300/70 text-xs font-medium">Enhancement</div>
+      </motion.div>
+    </div>
+  );
+};
+
 // --- COMPONENTE: NAVBAR ---
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -410,13 +604,9 @@ export default function App() {
 
             </motion.div>
             <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="relative group">
-              <div className="absolute -inset-10 bg-blue-500/10 rounded-full blur-[100px] opacity-50"></div>
-              <div className="bg-white/5 rounded-[3rem] p-4 border border-white/10 backdrop-blur-sm overflow-hidden shadow-2xl">
-                <img 
-                  src="https://www.inspek-solutions.com/wp-content/uploads/2025/02/Sensor.604-e1740395880663-1024x834.png" 
-                  alt="Sensor Technology" 
-                  className="w-full h-auto rounded-[2.5rem] opacity-90 transition-all duration-700 brightness-110 contrast-110 group-hover:scale-105"
-                />
+              <div className="absolute -inset-10 bg-orange-500/10 rounded-full blur-[100px] opacity-50"></div>
+              <div className="bg-white/5 rounded-[3rem] p-4 border border-white/10 backdrop-blur-sm overflow-hidden shadow-2xl" style={{ minHeight: '500px' }}>
+                <RamanSERSChart />
               </div>
             </motion.div>
           </div>
