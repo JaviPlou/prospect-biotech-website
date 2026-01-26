@@ -1,0 +1,40 @@
+🚀 CÓMO VISUALIZAR TU PÁGINA WEB EN CODESANDBOX
+================================================
+
+OPCIÓN 1: SUBIR ARCHIVOS (MÁS FÁCIL)
+-------------------------------------
+1. Ve a https://codesandbox.io/
+2. Haz clic en "Create Sandbox" (o "Create")
+3. Selecciona "Import Project"
+4. Arrastra TODA la carpeta "codesandbox-prospect" a la ventana
+5. Espera a que se instalen las dependencias
+6. ¡Tu página estará lista en unos segundos!
+
+
+OPCIÓN 2: CREAR MANUALMENTE
+---------------------------
+1. Ve a https://codesandbox.io/
+2. Haz clic en "Create Sandbox"
+3. Selecciona "React" template
+4. Copia el contenido de estos archivos:
+   - package.json → package.json
+   - index.html → public/index.html
+   - src/index.js → src/index.js
+   - src/App.js → src/App.js
+
+
+UBICACIÓN DE LOS ARCHIVOS:
+--------------------------
+Todos los archivos están en:
+/Users/macplou/Desktop/Prospect Biotech S.L/codesandbox-prospect/
+
+Estructura:
+codesandbox-prospect/
+├── package.json
+├── index.html
+└── src/
+    ├── index.js
+    └── App.js
+
+
+¡LISTO! Tu página web se visualizará automáticamente en el navegador integrado de CodeSandbox.
