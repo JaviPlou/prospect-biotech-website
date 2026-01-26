@@ -216,192 +216,213 @@ function AnimatedCounter({ value, duration = 1500, suffix = "", decimals = 0 }) 
 // --- COMPONENTE: GRÁFICO RAMAN VS SERS ---
 const RamanSERSChart = () => {
   const [hoveredLine, setHoveredLine] = useState(null);
+  const [mousePos, setMousePos] = useState(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
 
-  // Generar datos de espectro simulado
-  const generateSpectrum = (peaks, baseIntensity, noiseLevel) => {
+  // Generar datos de espectro super suave
+  const generateSpectrum = (peaks, baseIntensity) => {
     const points = [];
-    for (let i = 0; i <= 100; i++) {
-      let intensity = baseIntensity;
+    const resolution = 200;
 
-      // Agregar picos
+    for (let i = 0; i <= resolution; i++) {
+      let intensity = baseIntensity;
       peaks.forEach(peak => {
-        const distance = Math.abs(i - peak.position);
+        const x = (i / resolution) * 100;
+        const distance = Math.abs(x - peak.position);
         intensity += peak.height * Math.exp(-Math.pow(distance / peak.width, 2));
       });
-
-      // Agregar ruido
-      intensity += (Math.random() - 0.5) * noiseLevel;
-
-      points.push({ x: i, y: Math.max(0, intensity) });
+      points.push({ x: i / resolution * 100, y: Math.max(0, intensity) });
     }
     return points;
   };
 
-  // Datos Raman (señal débil)
+  // Datos Raman (gris, señal débil)
   const ramanPeaks = [
-    { position: 20, height: 15, width: 3 },
-    { position: 45, height: 12, width: 4 },
-    { position: 70, height: 18, width: 3.5 },
-    { position: 85, height: 10, width: 3 }
+    { position: 15, height: 8, width: 2 },
+    { position: 28, height: 12, width: 2.5 },
+    { position: 42, height: 6, width: 2 },
+    { position: 55, height: 10, width: 2.2 },
+    { position: 72, height: 5, width: 1.8 },
+    { position: 88, height: 7, width: 2 }
   ];
-  const ramanData = generateSpectrum(ramanPeaks, 5, 3);
+  const ramanData = generateSpectrum(ramanPeaks, 2);
 
-  // Datos SERS (señal amplificada ~100x)
+  // Datos SERS (morado, señal amplificada)
   const sersPeaks = [
-    { position: 20, height: 80, width: 2.5 },
-    { position: 45, height: 70, width: 3 },
-    { position: 70, height: 95, width: 2.8 },
-    { position: 85, height: 65, width: 2.5 }
+    { position: 15, height: 75, width: 1.5 },
+    { position: 28, height: 95, width: 1.8 },
+    { position: 42, height: 55, width: 1.4 },
+    { position: 55, height: 85, width: 1.6 },
+    { position: 72, height: 45, width: 1.3 },
+    { position: 88, height: 65, width: 1.5 }
   ];
-  const sersData = generateSpectrum(sersPeaks, 8, 2);
+  const sersData = generateSpectrum(sersPeaks, 3);
 
-  // Convertir datos a path SVG
-  const dataToPath = (data, scaleY = 1) => {
-    return data.map((point, i) => {
-      const x = (point.x / 100) * 600;
-      const y = 300 - (point.y * scaleY);
-      return `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
-    }).join(' ');
+  // Path suave con curvas bezier
+  const dataToSmoothPath = (data, scaleY = 1) => {
+    if (data.length === 0) return '';
+    let path = '';
+    const margin = 60;
+    const width = 700;
+    const height = 280;
+
+    data.forEach((point, i) => {
+      const x = margin + (point.x / 100) * (width - margin * 2);
+      const y = height - (point.y * scaleY);
+      if (i === 0) {
+        path += `M ${x} ${y}`;
+      } else {
+        const prevPoint = data[i - 1];
+        const prevX = margin + (prevPoint.x / 100) * (width - margin * 2);
+        const prevY = height - (prevPoint.y * scaleY);
+        const cpX = (prevX + x) / 2;
+        path += ` Q ${cpX} ${prevY}, ${x} ${y}`;
+      }
+    });
+    return path;
   };
 
-  const ramanPath = dataToPath(ramanData, 2);
-  const sersPath = dataToPath(sersData, 2);
+  const ramanPath = dataToSmoothPath(ramanData, 1.8);
+  const sersPath = dataToSmoothPath(sersData, 1.8);
+
+  const handleMouseMove = (e) => {
+    const svg = e.currentTarget;
+    const rect = svg.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setMousePos({ x, y });
+  };
 
   return (
-    <div ref={ref} className="w-full h-full bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 rounded-[2.5rem] p-8 relative overflow-hidden">
-      {/* Título y leyenda */}
-      <div className="absolute top-6 left-8 z-10">
-        <h3 className="text-white font-bold text-lg mb-4">Spectral Comparison</h3>
-        <div className="flex flex-col gap-2">
-          <div
-            className="flex items-center gap-2 cursor-pointer transition-opacity"
-            style={{ opacity: hoveredLine === 'sers' || hoveredLine === null ? 1 : 0.4 }}
-            onMouseEnter={() => setHoveredLine('sers')}
-            onMouseLeave={() => setHoveredLine(null)}
-          >
-            <div className="w-8 h-0.5 bg-orange-500"></div>
-            <span className="text-orange-400 text-sm font-semibold">SERS Signal (100× enhanced)</span>
-          </div>
-          <div
-            className="flex items-center gap-2 cursor-pointer transition-opacity"
-            style={{ opacity: hoveredLine === 'raman' || hoveredLine === null ? 1 : 0.4 }}
-            onMouseEnter={() => setHoveredLine('raman')}
-            onMouseLeave={() => setHoveredLine(null)}
-          >
-            <div className="w-8 h-0.5 bg-blue-400"></div>
-            <span className="text-blue-300 text-sm font-semibold">Standard Raman</span>
-          </div>
-        </div>
+    <div ref={ref} className="w-full h-full bg-white rounded-[2.5rem] p-8 relative overflow-hidden">
+      {/* Título minimalista */}
+      <div className="absolute top-8 right-8 z-10 flex flex-col items-end gap-3">
+        <h3 className="text-gray-800 font-bold text-xl">Raman</h3>
+        <h3 className="text-[#6366f1] font-bold text-xl" style={{ marginTop: '-8px' }}>SERS</h3>
       </div>
 
-      {/* Grid de fondo */}
-      <svg className="absolute inset-0 w-full h-full opacity-10">
-        <defs>
-          <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5"/>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid)" />
-      </svg>
+      {/* Leyenda interactiva */}
+      <div className="absolute top-8 left-8 z-10 flex flex-col gap-2">
+        <motion.div
+          className="flex items-center gap-2 cursor-pointer"
+          style={{ opacity: hoveredLine === 'sers' || hoveredLine === null ? 1 : 0.3, transition: 'opacity 0.2s' }}
+          onMouseEnter={() => setHoveredLine('sers')}
+          onMouseLeave={() => setHoveredLine(null)}
+          whileHover={{ x: 5 }}
+        >
+          <div className="w-10 h-1 bg-[#6366f1] rounded-full"></div>
+          <span className="text-[#6366f1] text-sm font-semibold">SERS</span>
+        </motion.div>
+        <motion.div
+          className="flex items-center gap-2 cursor-pointer"
+          style={{ opacity: hoveredLine === 'raman' || hoveredLine === null ? 1 : 0.3, transition: 'opacity 0.2s' }}
+          onMouseEnter={() => setHoveredLine('raman')}
+          onMouseLeave={() => setHoveredLine(null)}
+          whileHover={{ x: 5 }}
+        >
+          <div className="w-10 h-1 bg-gray-400 rounded-full"></div>
+          <span className="text-gray-600 text-sm font-semibold">Raman</span>
+        </motion.div>
+      </div>
 
-      {/* Gráfico principal */}
+      {/* Gráfico super limpio */}
       <svg
-        viewBox="0 0 650 350"
+        viewBox="0 0 700 350"
         className="w-full h-full relative z-0"
-        style={{ filter: 'drop-shadow(0 0 20px rgba(59, 130, 246, 0.3))' }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={() => setMousePos(null)}
+        style={{ cursor: 'crosshair' }}
       >
-        {/* Ejes */}
-        <line x1="40" y1="300" x2="620" y2="300" stroke="rgba(255,255,255,0.2)" strokeWidth="2" />
-        <line x1="40" y1="300" x2="40" y2="30" stroke="rgba(255,255,255,0.2)" strokeWidth="2" />
+        {/* Ejes minimalistas */}
+        <line x1="60" y1="280" x2="650" y2="280" stroke="#e5e7eb" strokeWidth="2" />
+        <line x1="60" y1="280" x2="60" y2="30" stroke="#e5e7eb" strokeWidth="2" />
+
+        {/* Marcas eje X */}
+        {[600, 800, 1000, 1200, 1400, 1600].map((value, i) => {
+          const x = 60 + (i / 5) * 590;
+          return (
+            <g key={value}>
+              <line x1={x} y1="280" x2={x} y2="285" stroke="#d1d5db" strokeWidth="1.5" />
+              <text x={x} y="305" fill="#9ca3af" fontSize="11" textAnchor="middle" fontFamily="Poppins, sans-serif">
+                {value}
+              </text>
+            </g>
+          );
+        })}
 
         {/* Labels */}
-        <text x="330" y="335" fill="rgba(255,255,255,0.5)" fontSize="12" textAnchor="middle" fontFamily="Poppins">
-          Raman Shift (cm⁻¹)
+        <text x="355" y="330" fill="#6b7280" fontSize="13" textAnchor="middle" fontFamily="Poppins, sans-serif" fontWeight="500">
+          Wavenumber (cm⁻¹)
         </text>
-        <text x="15" y="170" fill="rgba(255,255,255,0.5)" fontSize="12" textAnchor="middle" fontFamily="Poppins" transform="rotate(-90, 15, 170)">
+        <text x="25" y="160" fill="#6b7280" fontSize="13" textAnchor="middle" fontFamily="Poppins, sans-serif" fontWeight="500" transform="rotate(-90, 25, 160)">
           Intensity
         </text>
 
-        {/* Línea Raman (azul) */}
+        {/* Línea Raman (gris) */}
         <motion.path
-          d={`M 40 300 ${ramanPath}`}
+          d={ramanPath}
           fill="none"
-          stroke="rgba(96, 165, 250, 0.8)"
-          strokeWidth={hoveredLine === 'raman' ? "4" : "2.5"}
+          stroke={hoveredLine === 'raman' ? "#9ca3af" : "#d1d5db"}
+          strokeWidth={hoveredLine === 'raman' ? "3" : "2"}
           strokeLinecap="round"
           strokeLinejoin="round"
           initial={{ pathLength: 0, opacity: 0 }}
-          animate={isInView ? {
-            pathLength: 1,
-            opacity: hoveredLine === 'sers' ? 0.3 : 1
-          } : {}}
-          transition={{ duration: 2, ease: "easeOut", delay: 0.2 }}
+          animate={isInView ? { pathLength: 1, opacity: hoveredLine === 'sers' ? 0.4 : 1 } : {}}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
           style={{
-            filter: hoveredLine === 'raman' ? 'drop-shadow(0 0 8px rgba(96, 165, 250, 0.8))' : 'none'
+            filter: hoveredLine === 'raman' ? 'drop-shadow(0 2px 6px rgba(156, 163, 175, 0.4))' : 'none',
+            transition: 'all 0.3s ease'
           }}
+          onMouseEnter={() => setHoveredLine('raman')}
+          onMouseLeave={() => setHoveredLine(null)}
         />
 
-        {/* Área bajo la curva Raman */}
+        {/* Línea SERS (morado/azul) */}
         <motion.path
-          d={`M 40 300 ${ramanPath} L 640 300 Z`}
-          fill="url(#ramanGradient)"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: hoveredLine === 'sers' ? 0.1 : 0.2 } : {}}
-          transition={{ duration: 1.5, delay: 0.5 }}
-        />
-
-        {/* Línea SERS (naranja) */}
-        <motion.path
-          d={`M 40 300 ${sersPath}`}
+          d={sersPath}
           fill="none"
-          stroke="rgba(251, 146, 60, 0.9)"
+          stroke="#6366f1"
           strokeWidth={hoveredLine === 'sers' ? "4" : "3"}
           strokeLinecap="round"
           strokeLinejoin="round"
           initial={{ pathLength: 0, opacity: 0 }}
-          animate={isInView ? {
-            pathLength: 1,
-            opacity: hoveredLine === 'raman' ? 0.3 : 1
-          } : {}}
-          transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
+          animate={isInView ? { pathLength: 1, opacity: hoveredLine === 'raman' ? 0.4 : 1 } : {}}
+          transition={{ duration: 1.5, ease: "easeInOut", delay: 0.3 }}
           style={{
-            filter: hoveredLine === 'sers' ? 'drop-shadow(0 0 12px rgba(251, 146, 60, 0.9))' : 'drop-shadow(0 0 4px rgba(251, 146, 60, 0.5))'
+            filter: hoveredLine === 'sers' ? 'drop-shadow(0 4px 12px rgba(99, 102, 241, 0.5))' : 'drop-shadow(0 2px 8px rgba(99, 102, 241, 0.3))',
+            transition: 'all 0.3s ease'
           }}
+          onMouseEnter={() => setHoveredLine('sers')}
+          onMouseLeave={() => setHoveredLine(null)}
         />
 
-        {/* Área bajo la curva SERS */}
-        <motion.path
-          d={`M 40 300 ${sersPath} L 640 300 Z`}
-          fill="url(#sersGradient)"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: hoveredLine === 'raman' ? 0.1 : 0.3 } : {}}
-          transition={{ duration: 1.5, delay: 0.8 }}
-        />
-
-        {/* Gradientes */}
-        <defs>
-          <linearGradient id="ramanGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="rgba(96, 165, 250, 0.4)" />
-            <stop offset="100%" stopColor="rgba(96, 165, 250, 0)" />
-          </linearGradient>
-          <linearGradient id="sersGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="rgba(251, 146, 60, 0.5)" />
-            <stop offset="100%" stopColor="rgba(251, 146, 60, 0)" />
-          </linearGradient>
-        </defs>
+        {/* Línea vertical seguimiento mouse */}
+        {mousePos && (
+          <motion.line
+            x1={(mousePos.x / 100) * 700}
+            y1="30"
+            x2={(mousePos.x / 100) * 700}
+            y2="280"
+            stroke="#6366f1"
+            strokeWidth="1"
+            strokeDasharray="4 4"
+            opacity="0.3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.3 }}
+          />
+        )}
       </svg>
 
-      {/* Indicador de amplificación */}
+      {/* Amplificación minimalista */}
       <motion.div
-        className="absolute bottom-6 right-8 bg-orange-500/10 backdrop-blur-sm border border-orange-500/30 rounded-xl px-4 py-2"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 2, duration: 0.5 }}
+        className="absolute bottom-8 right-8 flex items-baseline gap-1"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ delay: 1.8, duration: 0.5 }}
       >
-        <div className="text-orange-400 font-black text-2xl">100×</div>
-        <div className="text-orange-300/70 text-xs font-medium">Enhancement</div>
+        <span className="text-5xl font-black text-[#6366f1]">100</span>
+        <span className="text-2xl font-bold text-[#6366f1]">×</span>
       </motion.div>
     </div>
   );
