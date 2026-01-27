@@ -584,7 +584,13 @@ export default function App() {
       <section className="py-24 bg-[#000B3D]/95 text-white relative z-10 backdrop-blur-sm shadow-2xl" id="technology">
         <div className="container mx-auto max-w-[1400px] px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="relative group">
+              <div className="absolute -inset-10 bg-orange-500/10 rounded-full blur-[100px] opacity-50"></div>
+              <div className="bg-white/5 rounded-[3rem] p-4 border border-white/10 backdrop-blur-sm overflow-hidden shadow-2xl" style={{ minHeight: '500px' }}>
+                <RamanSERSChart />
+              </div>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               {/* TAMAÑO REDUCIDO TAMBIÉN AQUÍ PARA CONSISTENCIA */}
               <h2 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-[0.9] tracking-tighter uppercase">
                 <span className="block whitespace-nowrap text-white">
@@ -592,11 +598,11 @@ export default function App() {
                 </span>
                 <span className="block text-orange-500">CORE.</span>
               </h2>
-              
+
               <p className="text-blue-100/60 text-lg mb-8 max-w-2xl leading-relaxed">
                 Multi-analyte SERS data streams enabling real-time bioprocess monitoring and automated lab control.
               </p>
-              
+
               {/* Glassmorphism Box for SERS Features */}
               <div className="bg-white/10 backdrop-blur-lg border border-white/15 rounded-3xl p-8">
 
@@ -623,12 +629,6 @@ export default function App() {
                 </div>
               </div>
 
-            </motion.div>
-            <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="relative group">
-              <div className="absolute -inset-10 bg-orange-500/10 rounded-full blur-[100px] opacity-50"></div>
-              <div className="bg-white/5 rounded-[3rem] p-4 border border-white/10 backdrop-blur-sm overflow-hidden shadow-2xl" style={{ minHeight: '500px' }}>
-                <RamanSERSChart />
-              </div>
             </motion.div>
           </div>
         </div>
