@@ -1,0 +1,1202 @@
+<!DOCTYPE html><html lang="en"><head>
+
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Prospect Biotech — The pulse of your bioprocess</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@300;400;500;600&amp;family=Poppins:wght@500;700;800;900&amp;family=Fraunces:ital,wght@0,400;0,700;0,900;1,700;1,900&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#000B3D',
+            'navy-2': '#0A1454',
+            blue: { brand: '#0066FF', light: '#3D8BFF' },
+            orange: { brand: '#FF6B35', soft: '#FF8A5C' },
+            paper: '#F7F7F4',
+            ink: '#0B0F2C',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+          },
+          letterSpacing: {
+            'micro': '0.18em',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #F7F7F4;
+      color: #0B0F2C;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+    .label {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .display {
+      font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+      font-weight: 900;
+      letter-spacing: -0.045em;
+      line-height: 0.95;
+    }
+    .hero-bg {
+      background:
+        radial-gradient(45% 65% at 100% 30%, rgba(255,107,53,0.22) 0%, rgba(255,107,53,0) 65%),
+        radial-gradient(35% 50% at 95% 80%, rgba(255,170,120,0.15) 0%, rgba(255,170,120,0) 65%),
+        radial-gradient(40% 60% at 0% 50%, rgba(155,200,240,0.30) 0%, rgba(155,200,240,0) 65%),
+        radial-gradient(35% 45% at 50% 100%, rgba(180,210,240,0.20) 0%, rgba(180,210,240,0) 70%),
+        linear-gradient(180deg, #FFFFFF 0%, #F8FAFD 100%);
+    }
+    .target-mark {
+      width: 56px; height: 56px; border-radius: 9999px;
+      border: 1.5px solid rgba(0,11,61,0.22);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .target-mark::after {
+      content: ''; width: 10px; height: 10px; border-radius: 9999px; background: #FF6B35;
+    }
+    .grid-bg {
+      background-image:
+        linear-gradient(to right, rgba(0,11,61,0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,11,61,0.05) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+    .grid-bg-dark {
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+    .glass {
+      background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.015) 100%);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .glass-light {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(0,11,61,0.06);
+    }
+    /* fade-in on scroll */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 900ms cubic-bezier(.16,1,.3,1), transform 900ms cubic-bezier(.16,1,.3,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 90ms; }
+    .reveal-delay-2 { transition-delay: 180ms; }
+    .reveal-delay-3 { transition-delay: 270ms; }
+    .reveal-delay-4 { transition-delay: 360ms; }
+    .reveal-delay-5 { transition-delay: 450ms; }
+
+    /* striped placeholder */
+    .placeholder-stripe {
+      background-image: repeating-linear-gradient(
+        135deg,
+        rgba(0,11,61,0.06) 0 8px,
+        rgba(0,11,61,0.02) 8px 16px
+      );
+    }
+    .placeholder-stripe-dark {
+      background-image: repeating-linear-gradient(
+        135deg,
+        rgba(255,255,255,0.05) 0 8px,
+        rgba(255,255,255,0.015) 8px 16px
+      );
+    }
+
+    /* animated dot pulse */
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+    .pulse-dot { animation: pulse-dot 1.6s ease-in-out infinite; }
+
+    /* spectral line */
+    @keyframes spectral-shift {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .spectral-track { animation: spectral-shift 24s linear infinite; }
+
+    /* scroll progress */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; height: 2px;
+      background: linear-gradient(90deg, #0066FF, #FF6B35);
+      width: 0%; z-index: 200;
+      transition: width 60ms linear;
+    }
+
+    /* selection */
+    ::selection { background: rgba(0,102,255,0.18); color: #000B3D; }
+
+    /* link underline */
+    .link-underline {
+      background-image: linear-gradient(currentColor, currentColor);
+      background-size: 0% 1px;
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      transition: background-size 400ms cubic-bezier(.16,1,.3,1);
+    }
+    .link-underline:hover { background-size: 100% 1px; }
+
+    /* marker tick */
+    .tick { position: absolute; width: 1px; background: rgba(0,11,61,0.18); }
+
+    /* ============ TWEAK SYSTEM ============ */
+    /* Mood: Atelier (default) — already styled by hero-bg + bg-paper */
+
+    /* Mood: Clinical — pure white, blue only, no orange warmth */
+    body[data-mood="clinical"] .hero-bg {
+      background:
+        radial-gradient(60% 55% at 90% 18%, rgba(0,102,255,0.18) 0%, rgba(0,102,255,0) 60%),
+        radial-gradient(55% 60% at 5% 70%, rgba(120,170,230,0.22) 0%, rgba(120,170,230,0) 60%),
+        linear-gradient(180deg, #FFFFFF 0%, #F4F6FA 100%) !important;
+    }
+    body[data-mood="clinical"] { background: #FFFFFF !important; }
+    body[data-mood="clinical"] .bg-paper { background: #F4F6FA !important; }
+    body[data-mood="clinical"] .target-mark::after { background: #0066FF !important; }
+    body[data-mood="clinical"] .text-orange-brand,
+    body[data-mood="clinical"] .bg-orange-brand,
+    body[data-mood="clinical"] [class*="orange"] { color: #0066FF !important; }
+    body[data-mood="clinical"] .gradient-headline {
+      background-image: linear-gradient(90deg,#001A66 0%, #0066FF 100%) !important;
+    }
+
+    /* Mood: Lab Dark — navy on navy, cyan accents */
+    body[data-mood="dark"] {
+      background: #050818 !important;
+      color: #E8EEFF !important;
+    }
+    body[data-mood="dark"] .hero-bg {
+      background:
+        radial-gradient(55% 55% at 92% 18%, rgba(255,107,53,0.30) 0%, rgba(255,107,53,0) 60%),
+        radial-gradient(60% 65% at 5% 75%, rgba(0,180,255,0.22) 0%, rgba(0,180,255,0) 60%),
+        radial-gradient(45% 50% at 50% 100%, rgba(0,102,255,0.18) 0%, rgba(0,102,255,0) 65%),
+        linear-gradient(180deg, #050818 0%, #0A1030 100%) !important;
+    }
+    body[data-mood="dark"] .bg-paper { background: #0A1030 !important; }
+    body[data-mood="dark"] .text-navy { color: #E8EEFF !important; }
+    body[data-mood="dark"] .text-navy\/60,
+    body[data-mood="dark"] .text-navy\/65,
+    body[data-mood="dark"] .text-navy\/80 { color: rgba(232,238,255,0.65) !important; }
+    body[data-mood="dark"] .text-navy\/40,
+    body[data-mood="dark"] .text-navy\/50 { color: rgba(232,238,255,0.45) !important; }
+    body[data-mood="dark"] .border-navy\/8,
+    body[data-mood="dark"] .border-navy\/10,
+    body[data-mood="dark"] .border-navy\/15,
+    body[data-mood="dark"] .border-navy\/20 { border-color: rgba(232,238,255,0.12) !important; }
+    body[data-mood="dark"] .bg-navy { background: #0066FF !important; color: #fff !important; }
+    body[data-mono="dark"] .target-mark { border-color: rgba(232,238,255,0.3) !important; }
+    body[data-mood="dark"] .target-mark { border-color: rgba(232,238,255,0.3) !important; }
+    body[data-mood="dark"] .gradient-headline {
+      background-image: linear-gradient(90deg,#5BCBFF 0%, #0066FF 100%) !important;
+    }
+
+    /* Display Type variants */
+    body[data-type="editorial"] .display {
+      font-family: 'Fraunces', 'Georgia', serif !important;
+      font-weight: 900 !important;
+      font-style: italic !important;
+      letter-spacing: -0.02em !important;
+    }
+    body[data-type="technical"] .display {
+      font-family: 'Inter', system-ui, sans-serif !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.055em !important;
+      line-height: 0.92 !important;
+    }
+
+    /* Headline accent variants — applied via .gradient-headline span */
+    .gradient-headline {
+      background-image: linear-gradient(90deg,#0066FF 0%, #5B9BFF 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      position: relative;
+      display: inline-block;
+    }
+    body[data-accent="highlight"] .gradient-headline {
+      background-image: none !important;
+      -webkit-background-clip: initial !important;
+      background-clip: initial !important;
+      color: #000B3D !important;
+    }
+    body[data-accent="highlight"][data-mood="dark"] .gradient-headline { color: #E8EEFF !important; }
+    body[data-accent="highlight"] .gradient-headline::before {
+      content: "";
+      position: absolute;
+      left: -0.05em; right: -0.05em;
+      bottom: 0.08em; height: 0.42em;
+      background: #FF6B35;
+      z-index: -1;
+      transform: skewX(-6deg);
+      border-radius: 3px;
+    }
+    body[data-accent="outlined"] .gradient-headline {
+      background-image: none !important;
+      -webkit-background-clip: initial !important;
+      background-clip: initial !important;
+      color: transparent !important;
+      -webkit-text-stroke: 2px #000B3D;
+    }
+    body[data-accent="outlined"][data-mood="dark"] .gradient-headline {
+      -webkit-text-stroke: 2px #5BCBFF;
+    }
+
+    /* ============ TWEAKS PANEL UI ============ */
+    #tweaks-panel {
+      position: fixed; right: 24px; bottom: 24px; z-index: 9999;
+      width: 320px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0,11,61,0.10);
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+      font-family: 'Inter', system-ui, sans-serif;
+      box-shadow: 0 24px 60px -20px rgba(0,11,61,0.25);
+      display: none;
+    }
+    #tweaks-panel.open { display: block; }
+    #tweaks-panel .tw-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    #tweaks-panel .tw-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #000B3D;
+    }
+    #tweaks-panel .tw-close {
+      width: 22px; height: 22px; border: none; background: transparent;
+      cursor: pointer; color: rgba(0,11,61,0.55); font-size: 16px; line-height: 1;
+    }
+    #tweaks-panel .tw-close:hover { color: #000B3D; }
+    #tweaks-panel .tw-section { margin-bottom: 14px; }
+    #tweaks-panel .tw-section:last-child { margin-bottom: 0; }
+    #tweaks-panel .tw-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(0,11,61,0.55); margin-bottom: 7px;
+    }
+    #tweaks-panel .tw-seg {
+      display: grid; gap: 4px;
+      background: rgba(0,11,61,0.05);
+      border-radius: 10px; padding: 4px;
+    }
+    #tweaks-panel .tw-seg.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    #tweaks-panel .tw-opt {
+      border: none; background: transparent; cursor: pointer;
+      padding: 8px 6px; border-radius: 7px;
+      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+      color: rgba(0,11,61,0.7);
+      transition: all 0.18s ease;
+    }
+    #tweaks-panel .tw-opt:hover { color: #000B3D; }
+    #tweaks-panel .tw-opt.active {
+      background: #000B3D; color: #fff;
+      box-shadow: 0 4px 12px -4px rgba(0,11,61,0.4);
+    }
+    #tweaks-toggle {
+      position: fixed; right: 24px; bottom: 24px; z-index: 9998;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: #000B3D; color: #fff; border: none; cursor: pointer;
+      box-shadow: 0 12px 30px -8px rgba(0,11,61,0.5);
+      display: none; align-items: center; justify-content: center;
+      transition: transform 0.2s ease;
+    }
+    #tweaks-toggle.show { display: flex; }
+    #tweaks-toggle:hover { transform: scale(1.08); }
+    #tweaks-panel.open ~ #tweaks-toggle { display: none; }
+  </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, system-ui, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:"JetBrains Mono", ui-monospace, monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-6{inset:1.5rem}.inset-x-0{left:0px;right:0px}.top-0{top:0px}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-12{margin-bottom:3rem}.mb-16{margin-bottom:4rem}.mb-2{margin-bottom:0.5rem}.mb-20{margin-bottom:5rem}.mb-3{margin-bottom:0.75rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-10{margin-top:2.5rem}.mt-3{margin-top:0.75rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-\[4\/5\]{aspect-ratio:4/5}.h-10{height:2.5rem}.h-12{height:3rem}.h-14{height:3.5rem}.h-2{height:0.5rem}.h-32{height:8rem}.h-48{height:12rem}.h-9{height:2.25rem}.h-full{height:100%}.h-px{height:1px}.w-10{width:2.5rem}.w-14{width:3.5rem}.w-2{width:0.5rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-auto{width:auto}.w-full{width:100%}.max-w-4xl{max-width:56rem}.max-w-\[1360px\]{max-width:1360px}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.max-w-xl{max-width:36rem}.flex-1{flex:1 1 0%}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-10{gap:2.5rem}.gap-12{gap:3rem}.gap-16{gap:4rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-px{gap:1px}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-navy\/10 > :not([hidden]) ~ :not([hidden]){border-color:rgb(0 11 61 / 0.1)}.self-end{align-self:flex-end}.self-center{align-self:center}.overflow-hidden{overflow:hidden}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-y{border-top-width:1px;border-bottom-width:1px}.border-b{border-bottom-width:1px}.border-r{border-right-width:1px}.border-t{border-top-width:1px}.border-blue-brand\/30{border-color:rgb(0 102 255 / 0.3)}.border-navy\/10{border-color:rgb(0 11 61 / 0.1)}.border-navy\/15{border-color:rgb(0 11 61 / 0.15)}.border-white\/20{border-color:rgb(255 255 255 / 0.2)}.bg-blue-brand{--tw-bg-opacity:1;background-color:rgb(0 102 255 / var(--tw-bg-opacity, 1))}.bg-navy{--tw-bg-opacity:1;background-color:rgb(0 11 61 / var(--tw-bg-opacity, 1))}.bg-navy\/30{background-color:rgb(0 11 61 / 0.3)}.bg-navy\/60{background-color:rgb(0 11 61 / 0.6)}.bg-orange-brand{--tw-bg-opacity:1;background-color:rgb(255 107 53 / var(--tw-bg-opacity, 1))}.bg-paper{--tw-bg-opacity:1;background-color:rgb(247 247 244 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/5{background-color:rgb(255 255 255 / 0.05)}.object-contain{object-fit:contain}.p-10{padding:2.5rem}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-8{padding:2rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-24{padding-top:6rem;padding-bottom:6rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.py-32{padding-top:8rem;padding-bottom:8rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pb-10{padding-bottom:2.5rem}.pb-32{padding-bottom:8rem}.pl-5{padding-left:1.25rem}.pl-6{padding-left:1.5rem}.pr-4{padding-right:1rem}.pr-5{padding-right:1.25rem}.pt-20{padding-top:5rem}.pt-6{padding-top:1.5rem}.pt-60{padding-top:15rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-5xl{font-size:3rem;line-height:1}.text-\[11px\]{font-size:11px}.text-\[15px\]{font-size:15px}.text-\[clamp\(3rem\2c 8vw\2c 7rem\)\]{font-size:clamp(3rem,8vw,7rem)}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-medium{font-weight:500}.leading-relaxed{line-height:1.625}.text-blue-brand{--tw-text-opacity:1;color:rgb(0 102 255 / var(--tw-text-opacity, 1))}.text-navy{--tw-text-opacity:1;color:rgb(0 11 61 / var(--tw-text-opacity, 1))}.text-navy\/30{color:rgb(0 11 61 / 0.3)}.text-navy\/40{color:rgb(0 11 61 / 0.4)}.text-navy\/50{color:rgb(0 11 61 / 0.5)}.text-navy\/60{color:rgb(0 11 61 / 0.6)}.text-navy\/70{color:rgb(0 11 61 / 0.7)}.text-navy\/80{color:rgb(0 11 61 / 0.8)}.text-orange-brand{--tw-text-opacity:1;color:rgb(255 107 53 / var(--tw-text-opacity, 1))}.text-orange-brand\/60{color:rgb(255 107 53 / 0.6)}.text-orange-brand\/70{color:rgb(255 107 53 / 0.7)}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-white\/30{color:rgb(255 255 255 / 0.3)}.text-white\/40{color:rgb(255 255 255 / 0.4)}.text-white\/50{color:rgb(255 255 255 / 0.5)}.text-white\/60{color:rgb(255 255 255 / 0.6)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-500{transition-duration:500ms}.hover\:border-blue-brand\/40:hover{border-color:rgb(0 102 255 / 0.4)}.hover\:border-navy:hover{--tw-border-opacity:1;border-color:rgb(0 11 61 / var(--tw-border-opacity, 1))}.hover\:border-navy\/40:hover{border-color:rgb(0 11 61 / 0.4)}.hover\:border-white\/60:hover{border-color:rgb(255 255 255 / 0.6)}.hover\:bg-blue-brand:hover{--tw-bg-opacity:1;background-color:rgb(0 102 255 / var(--tw-bg-opacity, 1))}.hover\:bg-navy:hover{--tw-bg-opacity:1;background-color:rgb(0 11 61 / var(--tw-bg-opacity, 1))}.hover\:bg-orange-brand:hover{--tw-bg-opacity:1;background-color:rgb(255 107 53 / var(--tw-bg-opacity, 1))}.hover\:text-blue-brand:hover{--tw-text-opacity:1;color:rgb(0 102 255 / var(--tw-text-opacity, 1))}.hover\:text-navy:hover{--tw-text-opacity:1;color:rgb(0 11 61 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:translate-x-0\.5{--tw-translate-x:0.125rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:translate-x-1{--tw-translate-x:0.25rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:border-blue-brand{--tw-border-opacity:1;border-color:rgb(0 102 255 / var(--tw-border-opacity, 1))}.group:hover .group-hover\:border-orange-brand{--tw-border-opacity:1;border-color:rgb(255 107 53 / var(--tw-border-opacity, 1))}.group:hover .group-hover\:bg-blue-brand{--tw-bg-opacity:1;background-color:rgb(0 102 255 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-orange-brand\/10{background-color:rgb(255 107 53 / 0.1)}.group:hover .group-hover\:text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}@media (min-width: 640px){.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}@media (min-width: 768px){.md\:col-span-2{grid-column:span 2 / span 2}.md\:col-span-3{grid-column:span 3 / span 3}.md\:col-span-5{grid-column:span 5 / span 5}.md\:inline{display:inline}.md\:flex{display:flex}.md\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:items-center{align-items:center}.md\:p-16{padding:4rem}.md\:text-6xl{font-size:3.75rem;line-height:1}}@media (min-width: 1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-6{grid-column:span 6 / span 6}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:col-start-8{grid-column-start:8}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:text-7xl{font-size:4.5rem;line-height:1}}</style></head>
+<body data-new-gr-c-s-check-loaded="14.1286.0" data-gr-ext-installed="" data-cc-id="cc-1" style="cursor: crosshair; background-color: rgb(245, 245, 238);">
+
+  <!-- ============ NAV ============ -->
+  <nav id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
+    <div class="max-w-[1360px] mx-auto px-8 h-48 flex items-center justify-between transition-all duration-500" id="navInner">
+      <a href="#" class="flex items-center gap-3 group">
+        <img id="navLogo" src="assets/prospect-logo.png" alt="Prospect Biotech" class="h-32 w-auto object-contain transition-all duration-500">
+      </a>
+
+      <div class="hidden md:flex items-center gap-10">
+        <a href="#technology" class="label text-navy/70 hover:text-navy link-underline">Technology</a>
+        <a href="#applications" class="label text-navy/70 hover:text-navy link-underline">Applications</a>
+        <a href="#company" class="label text-navy/70 hover:text-navy link-underline">Company</a>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <a href="#contact" class="inline-flex items-center gap-2 bg-navy text-white pl-5 pr-4 py-2.5 rounded-full label hover:bg-blue-brand transition-colors">
+          Contact
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <section class="relative pt-60 pb-32 overflow-hidden hero-bg min-h-screen flex items-center">
+    <div class="relative max-w-[1360px] mx-auto px-8 w-full">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7">
+          <div class="reveal flex items-center gap-3 mb-6 in">
+            <span class="w-8 h-[2px] bg-blue-brand"></span>
+            <span class="label text-blue-brand font-bold tracking-[0.22em]">Designed for what's next</span>
+          </div>
+          <h1 class="reveal reveal-delay-1 display text-[clamp(3rem,7.5vw,6.25rem)] text-navy in">
+            The Pulse of Your<br>
+            <span class="gradient-headline" style="background-image: linear-gradient(90deg,#0066FF 0%, #5B9BFF 100%);">Bioprocess.</span>
+          </h1>
+          <p class="reveal reveal-delay-2 mt-8 max-w-lg text-lg md:text-xl text-navy/65 leading-relaxed in" style="font-family:'Poppins',sans-serif;font-weight:500">
+            Precision SERS analytics for automated labs that demand instant
+            metabolic feedback.
+          </p>
+          <div class="reveal reveal-delay-3 mt-10 flex flex-wrap items-center gap-4 in" style="font-family:'Poppins',sans-serif">
+            <a href="#technology" class="inline-flex items-center gap-3 bg-blue-brand text-white px-10 py-5 rounded-full text-sm font-bold uppercase tracking-[0.18em] hover:bg-navy transition-all shadow-[0_14px_40px_-12px_rgba(0,102,255,0.55)] hover:-translate-y-0.5">
+              Our Technology
+              <svg width="16" height="16" viewBox="0 0 14 14" fill="none"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </a>
+            <a href="#applications" class="inline-flex items-center gap-2 px-10 py-5 rounded-full border-2 border-navy/20 text-navy hover:border-navy hover:bg-white/60 transition-all text-sm font-bold uppercase tracking-[0.18em] bg-white/40">
+              View Applications
+            </a>
+          </div>
+        </div>
+        <div class="lg:col-span-5 relative reveal reveal-delay-2 in">
+          <div class="absolute -inset-8 rounded-full" style="background: radial-gradient(60% 60% at 50% 50%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 70%);"></div>
+          <div class="absolute target-mark -top-2 left-2 z-10"></div>
+          <svg viewBox="0 0 400 400" class="absolute inset-0 w-full h-full" style="opacity:0.18">
+            <circle cx="200" cy="200" r="120" stroke="#0066FF" stroke-width="1" fill="none"/>
+            <circle cx="200" cy="200" r="160" stroke="#0066FF" stroke-width="1" fill="none"/>
+            <circle cx="200" cy="200" r="195" stroke="#0066FF" stroke-width="1" fill="none"/>
+          </svg>
+          <img src="assets/nexbio-cartridge.png" alt="Prospect multi-sensor cartridge" class="relative w-full max-w-[460px] mx-auto" style="filter: drop-shadow(0 30px 50px rgba(0,11,61,0.20))">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ METABOLITES (BIO STORY) ============ -->
+  <section class="py-32 bg-paper relative">
+    <div class="max-w-[1360px] mx-auto px-8">
+      <!-- Top: headline + cartridge -->
+      <div class="grid lg:grid-cols-12 gap-12 items-end mb-12">
+        <div class="lg:col-span-7 reveal">
+          <h2 class="display text-[clamp(2.75rem,6.5vw,5.25rem)] text-navy leading-[0.95]">
+            Metabolites speak<br>before cells fail.<br>
+            <span class="text-blue-brand">We listen in real time.</span>
+          </h2>
+          <p class="mt-8 max-w-xl text-lg text-navy/60 leading-relaxed">
+            Current metabolomics tools are powerful, but slow, expensive or
+            low-throughput. Prospect brings fast, multiplexed metabolic sensing
+            directly to biofluids and cell therapy workflows.
+          </p>
+        </div>
+        <div class="lg:col-span-5 reveal reveal-delay-1">
+          <div class="relative">
+            <!-- dot grid backdrop -->
+            <div class="absolute inset-0" style="background-image: radial-gradient(rgba(0,11,61,0.18) 1px, transparent 1px); background-size: 14px 14px; mask-image: radial-gradient(60% 60% at 50% 50%, #000 30%, transparent 80%); -webkit-mask-image: radial-gradient(60% 60% at 50% 50%, #000 30%, transparent 80%);"></div>
+            <img src="assets/nexbio-cartridge.png" alt="Prospect multi-sensor cartridge" class="relative w-full max-w-[420px] mx-auto rounded-xl">
+          </div>
+        </div>
+      </div>
+
+      <!-- Two diagram cards -->
+      <div class="grid md:grid-cols-2 gap-6 reveal reveal-delay-2">
+        <!-- LEFT: Early biochemical signals -->
+        <div class="bg-white rounded-2xl border border-navy/8 p-8 md:p-10">
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-11 h-11 rounded-full bg-blue-brand/10 flex items-center justify-center flex-shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </div>
+            <div>
+              <h3 class="display text-2xl text-navy">Early biochemical<br>signals</h3>
+              <span class="block w-10 h-0.5 bg-blue-brand mt-3"></span>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 items-center">
+            <p class="text-navy/60 leading-relaxed text-[15px]">
+              Metabolic shifts can appear within minutes, long before phenotype
+              or viability changes are visible.
+            </p>
+
+            <!-- cell + dashed connectors diagram -->
+            <div class="relative">
+              <svg viewBox="0 0 280 260" class="w-full h-auto">
+                <defs>
+                  <filter id="rb1"><feTurbulence baseFrequency="0.04" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="1.1"/></filter>
+                </defs>
+                <!-- pastel cell -->
+                <ellipse cx="80" cy="130" rx="58" ry="56" fill="#C9B6F0" opacity="0.45" filter="url(#rb1)"/>
+                <ellipse cx="78" cy="128" rx="20" ry="18" fill="#8E6FE0" opacity="0.7" filter="url(#rb1)"/>
+                <circle cx="60" cy="100" r="3" fill="#fff" opacity="0.7"/>
+                <circle cx="105" cy="155" r="2" fill="#fff" opacity="0.7"/>
+                <!-- dashed connectors -->
+                <g stroke="#000B3D" stroke-width="1.1" fill="none" stroke-dasharray="3 3" opacity="0.55">
+                  <path d="M125 95 L175 60"/>
+                  <path d="M135 115 L185 105"/>
+                  <path d="M140 135 L185 145"/>
+                  <path d="M135 155 L185 185"/>
+                  <path d="M120 175 L175 220"/>
+                </g>
+                <!-- molecule bubbles + labels -->
+                <g font-family="'Poppins',sans-serif" font-size="10" font-weight="700" fill="#000B3D">
+                  <g filter="url(#rb1)">
+                    <circle cx="190" cy="55" r="13" fill="#A8D5E8"/>
+                  </g>
+                  <text x="190" y="59" text-anchor="middle" fill="#fff">⌬</text>
+                  <text x="240" y="58" text-anchor="middle" font-size="9" fill="#000B3D" opacity="0.75">Biofluids</text>
+
+                  <g filter="url(#rb1)">
+                    <circle cx="195" cy="100" r="14" fill="#FFD0B0"/>
+                  </g>
+                  <text x="195" y="104" text-anchor="middle" fill="#000B3D">O</text>
+                  <text x="240" y="103" text-anchor="middle" font-size="9" opacity="0.75">Amino acids</text>
+
+                  <g filter="url(#rb1)">
+                    <circle cx="195" cy="140" r="13" fill="#C9B6F0"/>
+                  </g>
+                  <text x="195" y="144" text-anchor="middle">⌖</text>
+                  <text x="240" y="143" text-anchor="middle" font-size="9" opacity="0.75">Lipids</text>
+
+                  <g filter="url(#rb1)">
+                    <circle cx="195" cy="180" r="13" fill="#A8D5C8"/>
+                  </g>
+                  <text x="195" y="184" text-anchor="middle">C</text>
+                  <text x="245" y="183" text-anchor="middle" font-size="9" opacity="0.75">Carbohydrates</text>
+
+                  <g filter="url(#rb1)">
+                    <circle cx="195" cy="220" r="13" fill="#FFD9D2"/>
+                  </g>
+                  <text x="195" y="224" text-anchor="middle">$</text>
+                  <text x="243" y="223" text-anchor="middle" font-size="9" opacity="0.75">Nucleotides</text>
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-5 border-t border-navy/8 flex justify-center">
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-navy/5 text-navy/70 text-xs font-medium">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              Change within minutes
+            </span>
+          </div>
+        </div>
+
+        <!-- RIGHT: Fast multiplexed detection (quadrant) -->
+        <div class="bg-white rounded-2xl border border-navy/8 p-8 md:p-10">
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-11 h-11 rounded-full bg-blue-brand/10 flex items-center justify-center flex-shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="1.8" stroke-linecap="round"><path d="M5 19V9m6 10V5m6 14v-7"/></svg>
+            </div>
+            <div>
+              <h3 class="display text-2xl text-navy">Fast, multiplexed<br>detection</h3>
+              <span class="block w-10 h-0.5 bg-blue-brand mt-3"></span>
+            </div>
+          </div>
+
+          <p class="text-navy/60 leading-relaxed text-[15px] mb-6">
+            Prospect delivers high sensitivity and higher multiplexing at a
+            lower cost.
+          </p>
+
+          <!-- quadrant chart -->
+          <div class="relative">
+            <svg viewBox="0 0 460 280" class="w-full h-auto">
+              <defs>
+                <filter id="rb2"><feTurbulence baseFrequency="0.04" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="0.9"/></filter>
+              </defs>
+              <!-- axes -->
+              <g stroke="#000B3D" stroke-width="1.2" fill="none" filter="url(#rb2)">
+                <path d="M70 30 L70 240" marker-end="none"/>
+                <path d="M70 240 L420 240"/>
+                <path d="M68 32 L70 28 L72 32"/>
+                <path d="M418 238 L422 240 L418 242"/>
+              </g>
+              <text x="40" y="135" text-anchor="middle" font-family="'Poppins',sans-serif" font-weight="700" font-size="14" fill="#000B3D" transform="rotate(-90 40 135)">Sensitivity</text>
+              <text x="245" y="270" text-anchor="middle" font-family="'Poppins',sans-serif" font-weight="700" font-size="14" fill="#000B3D">Cost</text>
+              <text x="58" y="38" text-anchor="end" font-size="9" fill="#000B3D" opacity="0.55" font-family="'JetBrains Mono',monospace">High</text>
+              <text x="58" y="240" text-anchor="end" font-size="9" fill="#000B3D" opacity="0.55" font-family="'JetBrains Mono',monospace">Low</text>
+              <text x="78" y="255" font-size="9" fill="#000B3D" opacity="0.55" font-family="'JetBrains Mono',monospace">Low</text>
+              <text x="412" y="255" text-anchor="end" font-size="9" fill="#000B3D" opacity="0.55" font-family="'JetBrains Mono',monospace">High</text>
+              <!-- midline cross -->
+              <g stroke="#000B3D" stroke-width="1" fill="none" stroke-dasharray="3 3" opacity="0.18">
+                <line x1="70" y1="135" x2="420" y2="135"/>
+                <line x1="245" y1="30" x2="245" y2="240"/>
+              </g>
+
+              <!-- Prospect highlight (top-left, bigger) -->
+              <g filter="url(#rb2)">
+                <circle cx="135" cy="80" r="32" fill="none" stroke="#0066FF" stroke-width="2"/>
+                <circle cx="135" cy="80" r="6" fill="#0066FF"/>
+              </g>
+              <text x="135" y="55" text-anchor="middle" font-family="'Poppins',sans-serif" font-weight="800" font-size="13" fill="#0066FF">PROSPECT</text>
+              <text x="135" y="68" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#0066FF">(SERS)</text>
+
+              <!-- HPLC top-right large -->
+              <g filter="url(#rb2)">
+                <circle cx="345" cy="90" r="14" fill="#C9B6F0" stroke="#000B3D" stroke-width="1.2"/>
+              </g>
+              <text x="368" y="93" font-size="11" font-weight="600" fill="#000B3D">HPLC</text>
+
+              <!-- NMR mid-right large -->
+              <g filter="url(#rb2)">
+                <circle cx="335" cy="135" r="13" fill="#FFB089" stroke="#000B3D" stroke-width="1.2"/>
+              </g>
+              <text x="356" y="138" font-size="11" font-weight="600" fill="#000B3D">NMR</text>
+
+              <!-- Raman mid -->
+              <g filter="url(#rb2)">
+                <circle cx="320" cy="175" r="9" fill="#A8D5C8" stroke="#000B3D" stroke-width="1.2"/>
+              </g>
+              <text x="338" y="178" font-size="11" font-weight="600" fill="#000B3D">Raman</text>
+
+              <!-- FTIR -->
+              <g filter="url(#rb2)">
+                <circle cx="300" cy="205" r="8" fill="#A8D5E8" stroke="#000B3D" stroke-width="1.2"/>
+              </g>
+              <text x="316" y="208" font-size="11" font-weight="600" fill="#000B3D">FTIR</text>
+            </svg>
+
+            <!-- Legend -->
+            <div class="absolute bottom-2 right-2 bg-white border border-navy/10 rounded-lg p-2.5 text-[11px] space-y-1">
+              <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full border border-navy/40"></span><span class="text-navy/65">Lower multiplexing</span></div>
+              <div class="flex items-center gap-2 bg-navy/5 -mx-1.5 px-1.5 py-0.5 rounded"><span class="w-3.5 h-3.5 rounded-full border border-navy/60"></span><span class="text-navy">Higher multiplexing</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTAs -->
+      <div class="reveal reveal-delay-3 mt-12 flex flex-wrap justify-center items-center gap-4" style="font-family:'Poppins',sans-serif">
+        <a href="#technology" class="inline-flex items-center gap-3 bg-blue-brand text-white px-8 py-4 rounded-full text-sm font-bold uppercase tracking-[0.16em] hover:bg-navy transition-all shadow-[0_14px_40px_-12px_rgba(0,102,255,0.55)]">
+          Explore the cartridge
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </a>
+        <a href="#technology" class="inline-flex items-center gap-3 px-8 py-4 rounded-full border-2 border-navy/15 text-navy hover:border-navy hover:bg-white transition-all text-sm font-bold uppercase tracking-[0.16em]">
+          See the technology
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PILLARS ============ -->
+  <section class="py-32 bg-paper relative">
+    <div class="max-w-[1360px] mx-auto px-8">
+      <div class="grid lg:grid-cols-12 gap-12 mb-20">
+        <div class="lg:col-span-5 reveal">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="w-8 h-px bg-navy/30"></span>
+            <span class="label text-navy/50">The ecosystem</span>
+          </div>
+          <h2 class="display text-5xl md:text-6xl text-navy">
+            One platform.<br>
+            <span class="text-navy/40">Endless control.</span>
+          </h2>
+        </div>
+        <div class="lg:col-span-5 lg:col-start-8 reveal reveal-delay-1 self-end">
+          <p class="text-lg text-navy/60 leading-relaxed">
+            Three integrated layers — optical sensing, predictive intelligence,
+            and closed-loop control — built to operate as a single instrument
+            inside any modern bioprocess line.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Pillar 1 -->
+        <div class="reveal group relative bg-white rounded-2xl p-8 border border-navy/8 hover:border-blue-brand/40 transition-colors duration-500">
+          <div class="flex items-center justify-between mb-12">
+            <span class="label text-navy/40">01 / Sensing</span>
+            <span class="w-2 h-2 rounded-full bg-blue-brand"></span>
+          </div>
+          <!-- Sketch: cell with metabolite molecules orbiting -->
+          <div class="h-40 mb-7 relative -mx-2">
+            <svg viewBox="0 0 280 160" class="w-full h-full" style="font-family:'Poppins',sans-serif">
+              <defs>
+                <filter id="rough1"><feTurbulence baseFrequency="0.04" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="1.2"/></filter>
+              </defs>
+              <!-- pastel cell -->
+              <ellipse cx="95" cy="90" rx="58" ry="54" fill="#FFD9D2" opacity="0.55" filter="url(#rough1)"/>
+              <ellipse cx="100" cy="88" rx="22" ry="20" fill="#C9B6F0" opacity="0.85" filter="url(#rough1)"/>
+              <!-- dashed connectors -->
+              <g stroke="#000B3D" stroke-width="1.2" fill="none" stroke-dasharray="3 3" opacity="0.55">
+                <path d="M120 70 L185 38"/>
+                <path d="M135 90 L210 78"/>
+                <path d="M125 110 L200 130"/>
+                <path d="M95 130 L150 150"/>
+              </g>
+              <!-- molecule bubbles -->
+              <g filter="url(#rough1)">
+                <circle cx="195" cy="36" r="15" fill="#FFD0B0"/>
+                <circle cx="222" cy="78" r="17" fill="#C9B6F0"/>
+                <circle cx="212" cy="130" r="14" fill="#FF8A5C" opacity="0.85"/>
+                <circle cx="160" cy="152" r="12" fill="#A8D5C8"/>
+              </g>
+              <!-- glyph labels in molecules -->
+              <g font-size="10" font-weight="700" text-anchor="middle" fill="#000B3D">
+                <text x="195" y="40">O₂</text>
+                <text x="222" y="82">CO₂</text>
+                <text x="212" y="134" fill="#fff">C</text>
+                <text x="160" y="156">GU</text>
+              </g>
+            </svg>
+          </div>
+          <h3 class="display text-2xl text-navy mb-3">Integrated SERS</h3>
+          <p class="text-navy/60 leading-relaxed text-[15px]">
+            Real-time molecular tracking with parts-per-million sensitivity.
+            No sampling — continuous, in-line signal.
+          </p>
+          <div class="mt-8 pt-6 border-t border-navy/8 flex items-center justify-between">
+            <span class="label text-blue-brand">Read spec</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="text-blue-brand group-hover:translate-x-1 transition-transform"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg>
+          </div>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="reveal reveal-delay-1 group relative bg-white rounded-2xl p-8 border border-navy/8 hover:border-blue-brand/40 transition-colors duration-500">
+          <div class="flex items-center justify-between mb-12">
+            <span class="label text-navy/40">02 / Intelligence</span>
+            <span class="w-2 h-2 rounded-full bg-blue-brand"></span>
+          </div>
+          <!-- Sketch: spectral signal turning into prediction -->
+          <div class="h-40 mb-7 relative -mx-2">
+            <svg viewBox="0 0 280 160" class="w-full h-full">
+              <defs>
+                <filter id="rough2"><feTurbulence baseFrequency="0.05" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="1"/></filter>
+              </defs>
+              <!-- noisy raw signal -->
+              <path d="M10 100 Q20 60 30 95 T55 90 T80 70 T105 95 T130 60 T155 85" stroke="#000B3D" stroke-width="1.2" fill="none" opacity="0.35" filter="url(#rough2)"/>
+              <!-- arrow brain blob -->
+              <ellipse cx="175" cy="82" rx="22" ry="20" fill="#C9B6F0" opacity="0.85" filter="url(#rough2)"/>
+              <text x="175" y="86" text-anchor="middle" font-size="11" font-weight="700" fill="#000B3D" font-family="'Poppins',sans-serif">AI</text>
+              <path d="M155 82 L195 82" stroke="#000B3D" stroke-width="1" fill="none" stroke-dasharray="2 2" opacity="0.5"/>
+              <!-- clean prediction line -->
+              <path d="M205 110 L225 95 L245 70 L268 50" stroke="#0066FF" stroke-width="2.4" fill="none" stroke-linecap="round" filter="url(#rough2)"/>
+              <circle cx="245" cy="70" r="4" fill="#FF6B35" filter="url(#rough2)"/>
+              <circle cx="225" cy="95" r="3" fill="#0066FF" filter="url(#rough2)"/>
+              <!-- axis tick marks -->
+              <g stroke="#000B3D" stroke-width="1" opacity="0.4">
+                <line x1="10" y1="135" x2="155" y2="135"/>
+                <line x1="205" y1="135" x2="268" y2="135"/>
+              </g>
+              <text x="82" y="152" font-size="9" font-family="'JetBrains Mono',monospace" fill="#000B3D" opacity="0.5" text-anchor="middle">raw spectra</text>
+              <text x="235" y="152" font-size="9" font-family="'JetBrains Mono',monospace" fill="#000B3D" opacity="0.5" text-anchor="middle">forecast</text>
+            </svg>
+          </div>
+          <h3 class="display text-2xl text-navy mb-3">Predictive intelligence</h3>
+          <p class="text-navy/60 leading-relaxed text-[15px]">
+            Neural networks decode complex spectra instantly, turning raw
+            optical data into actionable metabolic insight.
+          </p>
+          <div class="mt-8 pt-6 border-t border-navy/8 flex items-center justify-between">
+            <span class="label text-blue-brand">Read spec</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="text-blue-brand group-hover:translate-x-1 transition-transform"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg>
+          </div>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="reveal reveal-delay-2 group relative bg-white rounded-2xl p-8 border border-navy/8 hover:border-blue-brand/40 transition-colors duration-500">
+          <div class="flex items-center justify-between mb-12">
+            <span class="label text-navy/40">03 / Control</span>
+            <span class="w-2 h-2 rounded-full bg-orange-brand"></span>
+          </div>
+          <!-- Sketch: feedback loop between bioreactor and controller -->
+          <div class="h-40 mb-7 relative -mx-2">
+            <svg viewBox="0 0 280 160" class="w-full h-full">
+              <defs>
+                <filter id="rough3"><feTurbulence baseFrequency="0.05" numOctaves="2" seed="5"/><feDisplacementMap in="SourceGraphic" scale="1.1"/></filter>
+              </defs>
+              <!-- bioreactor flask shape -->
+              <g filter="url(#rough3)">
+                <ellipse cx="75" cy="95" rx="40" ry="42" fill="#A8D5C8" opacity="0.6"/>
+                <rect x="60" y="40" width="30" height="15" rx="3" fill="none" stroke="#000B3D" stroke-width="1.4"/>
+                <line x1="55" y1="55" x2="95" y2="55" stroke="#000B3D" stroke-width="1.4"/>
+              </g>
+              <text x="75" y="100" text-anchor="middle" font-size="10" font-weight="700" fill="#000B3D" font-family="'Poppins',sans-serif">REACTOR</text>
+              <!-- controller box -->
+              <g filter="url(#rough3)">
+                <rect x="185" y="68" width="75" height="55" rx="6" fill="#FFD0B0" opacity="0.85"/>
+                <circle cx="222" cy="95" r="10" fill="none" stroke="#000B3D" stroke-width="1.4"/>
+                <line x1="222" y1="95" x2="222" y2="88" stroke="#FF6B35" stroke-width="2" stroke-linecap="round"/>
+                <line x1="222" y1="95" x2="227" y2="99" stroke="#FF6B35" stroke-width="2" stroke-linecap="round"/>
+              </g>
+              <text x="222" y="118" text-anchor="middle" font-size="8" font-weight="700" fill="#000B3D" font-family="'JetBrains Mono',monospace">PB-CTL</text>
+              <!-- arrows of the loop -->
+              <g fill="none" stroke="#000B3D" stroke-width="1.4" stroke-dasharray="4 3" filter="url(#rough3)">
+                <path d="M115 75 Q150 50 185 75" marker-end="url(#arr)"/>
+                <path d="M185 110 Q150 138 115 110" marker-end="url(#arr)"/>
+              </g>
+              <defs>
+                <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M0 0 L10 5 L0 10 Z" fill="#000B3D"/>
+                </marker>
+              </defs>
+              <text x="150" y="45" text-anchor="middle" font-size="9" font-family="'JetBrains Mono',monospace" fill="#0066FF">signal</text>
+              <text x="150" y="148" text-anchor="middle" font-size="9" font-family="'JetBrains Mono',monospace" fill="#FF6B35">action</text>
+            </svg>
+          </div>
+          <h3 class="display text-2xl text-navy mb-3">Closed-loop control</h3>
+          <p class="text-navy/60 leading-relaxed text-[15px]">
+            From observation to action. Automate nutrient feeding and parameter
+            adjustments based on live metabolic feedback.
+          </p>
+          <div class="mt-8 pt-6 border-t border-navy/8 flex items-center justify-between">
+            <span class="label text-orange-brand">Read spec</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="text-orange-brand group-hover:translate-x-1 transition-transform"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TECHNOLOGY / STATS (DARK) ============ -->
+  <section id="technology" class="relative py-32 bg-navy text-white overflow-hidden">
+    <div class="relative max-w-[1360px] mx-auto px-8">
+      <!-- Header row -->
+      <div class="flex items-center justify-between mb-16">
+        <div class="flex items-center gap-3">
+          <span class="w-8 h-px bg-orange-brand"></span>
+          <span class="label text-orange-brand">Proprietary technology</span>
+        </div>
+        <span class="label text-white/40 hidden md:inline">PB-CORE / specifications</span>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-16 items-start mb-20">
+        <div class="lg:col-span-5 reveal">
+          <h2 class="display text-5xl md:text-6xl lg:text-7xl">
+            Our spectral<br>
+            <span class="text-orange-brand">core.</span>
+          </h2>
+          <p class="mt-8 text-white/60 leading-relaxed text-lg max-w-md">
+            Multi-analyte SERS data streams that turn a bioreactor into a
+            transparent system — every molecule, every second, every batch.
+          </p>
+          <a href="#" class="mt-10 inline-flex items-center gap-3 group">
+            <span class="label text-white">Read the whitepaper</span>
+            <span class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center group-hover:border-orange-brand group-hover:bg-orange-brand/10 transition-colors">
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg>
+            </span>
+          </a>
+        </div>
+
+        <!-- Stats grid -->
+        <div class="lg:col-span-7 reveal reveal-delay-1">
+          <div class="glass rounded-2xl p-2">
+            <div class="grid sm:grid-cols-2 gap-px bg-white/5 rounded-xl overflow-hidden">
+
+              <!-- Stat -->
+              <div class="bg-navy/60 p-8">
+                <div class="flex items-center justify-between mb-6">
+                  <span class="label text-white/40">Analytical accuracy</span>
+                  <span class="mono text-white/30 text-xs">01</span>
+                </div>
+                <div class="display text-5xl text-white mono">
+                  <span data-counter="99.8" data-decimals="1">0.0</span><span class="text-white/40">%</span>
+                </div>
+                <p class="mt-3 text-sm text-white/50">Precision in every metabolic reading.</p>
+              </div>
+
+              <div class="bg-navy/60 p-8">
+                <div class="flex items-center justify-between mb-6">
+                  <span class="label text-white/40">Detection speed</span>
+                  <span class="mono text-white/30 text-xs">02</span>
+                </div>
+                <div class="display text-5xl text-white mono">
+                  <span data-counter="0.2" data-decimals="1">0.0</span><span class="text-white/40">s</span>
+                </div>
+                <p class="mt-3 text-sm text-white/50">Real-time monitoring capability.</p>
+              </div>
+
+              <div class="bg-navy/60 p-8">
+                <div class="flex items-center justify-between mb-6">
+                  <span class="label text-orange-brand/70">Sensitivity</span>
+                  <span class="mono text-white/30 text-xs">03</span>
+                </div>
+                <div class="display text-5xl text-orange-brand mono">
+                  <span data-counter="100" data-decimals="0">0</span><span class="text-orange-brand/60">×</span>
+                </div>
+                <p class="mt-3 text-sm text-white/50">Finds the smallest traces in any mix.</p>
+              </div>
+
+              <div class="bg-navy/60 p-8">
+                <div class="flex items-center justify-between mb-6">
+                  <span class="label text-orange-brand/70">Sample volume</span>
+                  <span class="mono text-white/30 text-xs">04</span>
+                </div>
+                <div class="display text-5xl text-orange-brand mono">
+                  −<span data-counter="40" data-decimals="0">0</span><span class="text-orange-brand/60">×</span>
+                </div>
+                <p class="mt-3 text-sm text-white/50">Test often without draining your reactor.</p>
+              </div>
+
+              <div class="bg-navy/60 p-8">
+                <div class="flex items-center justify-between mb-6">
+                  <span class="label text-orange-brand/70">Laser power</span>
+                  <span class="mono text-white/30 text-xs">05</span>
+                </div>
+                <div class="display text-5xl text-orange-brand mono">
+                  −<span data-counter="30" data-decimals="0">0</span><span class="text-orange-brand/60">×</span>
+                </div>
+                <p class="mt-3 text-sm text-white/50">High precision, gentle on cells.</p>
+              </div>
+
+              <div class="bg-navy/60 p-8">
+                <div class="flex items-center justify-between mb-6">
+                  <span class="label text-orange-brand/70">Readout speed</span>
+                  <span class="mono text-white/30 text-xs">06</span>
+                </div>
+                <div class="display text-5xl text-orange-brand mono">
+                  <span data-counter="12" data-decimals="0">0</span><span class="text-orange-brand/60">×</span>
+                </div>
+                <p class="mt-3 text-sm text-white/50">Get results instantly. No waiting.</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ APPLICATIONS ============ -->
+  <section id="applications" class="py-32 bg-paper relative">
+    <div class="max-w-[1360px] mx-auto px-8">
+      <div class="grid lg:grid-cols-12 gap-16">
+        <!-- Left: image / visual -->
+        <div class="lg:col-span-6 reveal">
+          <div class="relative">
+            <div class="aspect-[4/5] rounded-2xl border border-navy/10 relative overflow-hidden bg-navy">
+              <img src="assets/nexbio-cartridge.png" alt="NexBio multi-sensor cartridge" class="absolute inset-0 w-full h-full object-cover">
+              <div class="absolute top-5 left-5 flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15">
+                <span class="w-1.5 h-1.5 rounded-full bg-orange-brand"></span>
+                <span class="label text-white/85" style="font-size:10px">Sensor head · PB-S1</span>
+              </div>
+              <div class="absolute bottom-5 left-5 right-5 grid grid-cols-3 gap-px bg-white/10 rounded-lg overflow-hidden border border-white/10 backdrop-blur-md">
+                <div class="bg-navy/70 px-3 py-2.5 mono text-[11px] text-white/85"><span class="block text-white/40">λ</span>785 nm</div>
+                <div class="bg-navy/70 px-3 py-2.5 mono text-[11px] text-white/85"><span class="block text-white/40">∅</span>12 mm</div>
+                <div class="bg-navy/70 px-3 py-2.5 mono text-[11px] text-white/85"><span class="block text-white/40">IP</span>IP65</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: copy -->
+        <div class="lg:col-span-5 lg:col-start-8 self-center reveal reveal-delay-1">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="w-8 h-px bg-blue-brand"></span>
+            <span class="label text-blue-brand">Digital ecosystem</span>
+          </div>
+          <h2 class="display text-5xl md:text-6xl text-navy">
+            The next-gen <span class="text-blue-brand">platform</span>.
+          </h2>
+          <p class="mt-8 text-lg text-navy/60 leading-relaxed">
+            We combine integrated photonics with optical sensing and AI to lead
+            the bioprocessing industry into a new age of data-driven precision.
+          </p>
+
+          <ul class="mt-10 divide-y divide-navy/10 border-y border-navy/10">
+            <li class="py-4 flex items-center justify-between">
+              <span class="text-navy">Continuous predictive modeling</span>
+              <span class="label text-navy/40">PB-AI</span>
+            </li>
+            <li class="py-4 flex items-center justify-between">
+              <span class="text-navy">Automated feeding strategies</span>
+              <span class="label text-navy/40">PB-CTL</span>
+            </li>
+            <li class="py-4 flex items-center justify-between">
+              <span class="text-navy">Seamless SCADA integration</span>
+              <span class="label text-navy/40">OPC-UA</span>
+            </li>
+            <li class="py-4 flex items-center justify-between">
+              <span class="text-navy">Multi-reactor orchestration</span>
+              <span class="label text-navy/40">PB-NET</span>
+            </li>
+          </ul>
+
+          <a href="#contact" class="mt-10 inline-flex items-center gap-3 group">
+            <span class="label text-blue-brand">Explore the platform</span>
+            <span class="w-9 h-9 rounded-full border border-blue-brand/30 flex items-center justify-center group-hover:bg-blue-brand group-hover:border-blue-brand transition-colors">
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none" class="text-blue-brand group-hover:text-white transition-colors"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section id="contact" class="py-24 bg-paper">
+    <div class="max-w-[1360px] mx-auto px-8">
+      <div class="relative bg-navy text-white rounded-3xl p-10 md:p-16 overflow-hidden">
+        <div class="relative grid lg:grid-cols-12 gap-10 items-end">
+          <div class="lg:col-span-7">
+            <div class="flex items-center gap-3 mb-5">
+              <span class="w-8 h-px bg-orange-brand"></span>
+              <span class="label text-orange-brand">Get in touch</span>
+            </div>
+            <h2 class="display text-4xl md:text-6xl">
+              Ready to see it<br>
+              <span class="text-white/50">running on your line?</span>
+            </h2>
+          </div>
+          <div class="lg:col-span-5">
+            <p class="text-white/60 leading-relaxed mb-8">
+              We'll walk through integration, qualification, and what a pilot
+              looks like for your process.
+            </p>
+            <div class="flex flex-wrap gap-3">
+              <a href="mailto:contact@prospect-biotech.com" class="inline-flex items-center gap-3 bg-white text-navy pl-6 pr-5 py-4 rounded-full hover:bg-orange-brand hover:text-white transition-colors group">
+                <span class="text-sm font-medium">Book a call</span>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="group-hover:translate-x-0.5 transition-transform"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg>
+              </a>
+              <a href="#" class="inline-flex items-center gap-2 px-6 py-4 rounded-full border border-white/20 hover:border-white/60 transition-colors text-sm font-medium">
+                Download datasheet
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer id="company" class="bg-paper border-t border-navy/10 pt-20 pb-10">
+    <div class="max-w-[1360px] mx-auto px-8">
+      <div class="grid md:grid-cols-12 gap-10 mb-16">
+        <div class="md:col-span-5">
+          <div class="mb-6">
+            <img src="assets/prospect-logo.png" alt="Prospect Biotech" class="h-12 w-auto object-contain">
+          </div>
+          <p class="text-navy/60 leading-relaxed max-w-sm">
+            Pioneering the future of bioprocess optimization through photonic
+            sensing and industrial AI.
+          </p>
+        </div>
+        <div class="md:col-span-2">
+          <div class="label text-navy/40 mb-5">Product</div>
+          <ul class="space-y-3 text-navy/80 text-sm">
+            <li><a href="#technology" class="hover:text-blue-brand">Technology</a></li>
+            <li><a href="#applications" class="hover:text-blue-brand">Applications</a></li>
+            <li><a href="#" class="hover:text-blue-brand">Datasheets</a></li>
+          </ul>
+        </div>
+        <div class="md:col-span-2">
+          <div class="label text-navy/40 mb-5">Company</div>
+          <ul class="space-y-3 text-navy/80 text-sm">
+            <li><a href="#" class="hover:text-blue-brand">About</a></li>
+            <li><a href="#" class="hover:text-blue-brand">Careers</a></li>
+            <li><a href="#" class="hover:text-blue-brand">Press</a></li>
+          </ul>
+        </div>
+        <div class="md:col-span-3">
+          <div class="label text-navy/40 mb-5">Get in touch</div>
+          <a href="mailto:contact@prospect-biotech.com" class="block text-navy hover:text-blue-brand text-sm font-medium link-underline">
+            contact@prospect-biotech.com
+          </a>
+          <div class="mt-6 flex gap-2">
+            <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-full border border-navy/15 flex items-center justify-center text-navy hover:bg-navy hover:text-white hover:border-navy transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22V8zm7.32 0h4.37v1.92h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V22h-4.56v-6.4c0-1.53-.03-3.5-2.13-3.5-2.13 0-2.46 1.66-2.46 3.39V22H7.54V8z"></path></svg>
+            </a>
+            <a href="#" aria-label="X" class="w-10 h-10 rounded-full border border-navy/15 flex items-center justify-center text-navy hover:bg-navy hover:text-white hover:border-navy transition-colors">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z"></path></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-navy/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="label text-navy/40">© 2026 Prospect Biotech Solutions S.A. — All rights reserved.</div>
+        <div class="label text-navy/40">Made for bioprocess teams · Bilbao</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Animated counters
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+    const counterIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = parseFloat(el.dataset.counter);
+        const decimals = parseInt(el.dataset.decimals || '0', 10);
+        const duration = 1600;
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min(1, (now - start) / duration);
+          const v = target * easeOutCubic(t);
+          el.textContent = decimals > 0 ? v.toFixed(decimals) : Math.round(v).toString();
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        counterIO.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-counter]').forEach(el => counterIO.observe(el));
+
+    // Nav scroll state
+    const nav = document.getElementById('nav');
+    const navInner = document.getElementById('navInner');
+    const navLogo = document.getElementById('navLogo');
+    const onScroll = () => {
+      const scrolled = window.scrollY > 30;
+      if (scrolled) {
+        nav.classList.add('bg-paper/80', 'backdrop-blur-xl', 'border-b', 'border-navy/8');
+        navInner.classList.remove('h-48');
+        navInner.classList.add('h-20');
+        navLogo.classList.remove('h-32');
+        navLogo.classList.add('h-10');
+      } else {
+        nav.classList.remove('bg-paper/80', 'backdrop-blur-xl', 'border-b', 'border-navy/8');
+        navInner.classList.add('h-48');
+        navInner.classList.remove('h-20');
+        navLogo.classList.add('h-32');
+        navLogo.classList.remove('h-10');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  </script>
+
+  <!-- ============ TWEAKS PANEL ============ -->
+  <div id="tweaks-panel">
+    <div class="tw-head">
+      <div class="tw-title">Tweaks</div>
+      <button class="tw-close" data-tw-close aria-label="Close">×</button>
+    </div>
+
+    <div class="tw-section">
+      <div class="tw-label">Mood</div>
+      <div class="tw-seg cols-3" data-tw-group="mood">
+        <button class="tw-opt" data-tw-value="atelier">Atelier</button>
+        <button class="tw-opt" data-tw-value="clinical">Clinical</button>
+        <button class="tw-opt" data-tw-value="dark">Lab Dark</button>
+      </div>
+    </div>
+
+    <div class="tw-section">
+      <div class="tw-label">Display Type</div>
+      <div class="tw-seg cols-3" data-tw-group="type">
+        <button class="tw-opt" data-tw-value="bold">Bold</button>
+        <button class="tw-opt" data-tw-value="editorial">Editorial</button>
+        <button class="tw-opt" data-tw-value="technical">Technical</button>
+      </div>
+    </div>
+
+    <div class="tw-section">
+      <div class="tw-label">Headline Accent</div>
+      <div class="tw-seg cols-3" data-tw-group="accent">
+        <button class="tw-opt" data-tw-value="gradient">Gradient</button>
+        <button class="tw-opt" data-tw-value="highlight">Highlight</button>
+        <button class="tw-opt" data-tw-value="outlined">Outlined</button>
+      </div>
+    </div>
+  </div>
+  <button id="tweaks-toggle" aria-label="Open tweaks">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+  </button>
+
+  <script>
+    (function(){
+      const TWEAKS = /*EDITMODE-BEGIN*/{
+        "mood": "atelier",
+        "type": "bold",
+        "accent": "gradient"
+      }/*EDITMODE-END*/;
+
+      const body = document.body;
+      const panel = document.getElementById('tweaks-panel');
+      const toggleBtn = document.getElementById('tweaks-toggle');
+      let panelEnabled = false;
+
+      function apply(state) {
+        body.setAttribute('data-mood', state.mood);
+        body.setAttribute('data-type', state.type);
+        body.setAttribute('data-accent', state.accent);
+        document.querySelectorAll('[data-tw-group]').forEach(group => {
+          const key = group.getAttribute('data-tw-group');
+          group.querySelectorAll('.tw-opt').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-tw-value') === state[key]);
+          });
+        });
+      }
+
+      function setKey(key, value) {
+        TWEAKS[key] = value;
+        apply(TWEAKS);
+        try {
+          window.parent.postMessage({type: '__edit_mode_set_keys', edits: {[key]: value}}, '*');
+        } catch (e) {}
+      }
+
+      // Wire option buttons
+      document.querySelectorAll('[data-tw-group]').forEach(group => {
+        const key = group.getAttribute('data-tw-group');
+        group.querySelectorAll('.tw-opt').forEach(btn => {
+          btn.addEventListener('click', () => setKey(key, btn.getAttribute('data-tw-value')));
+        });
+      });
+
+      // Close button
+      panel.querySelector('[data-tw-close]').addEventListener('click', () => {
+        panel.classList.remove('open');
+        if (panelEnabled) toggleBtn.classList.add('show');
+        try { window.parent.postMessage({type: '__edit_mode_dismissed'}, '*'); } catch (e) {}
+      });
+      toggleBtn.addEventListener('click', () => {
+        panel.classList.add('open');
+        toggleBtn.classList.remove('show');
+      });
+
+      // Apply initial state (always — themes work even with panel closed)
+      apply(TWEAKS);
+
+      // Host protocol
+      window.addEventListener('message', (e) => {
+        const msg = e.data || {};
+        if (msg.type === '__activate_edit_mode') {
+          panelEnabled = true;
+          panel.classList.add('open');
+          toggleBtn.classList.remove('show');
+        } else if (msg.type === '__deactivate_edit_mode') {
+          panelEnabled = false;
+          panel.classList.remove('open');
+          toggleBtn.classList.remove('show');
+        }
+      });
+      try {
+        window.parent.postMessage({type: '__edit_mode_available'}, '*');
+      } catch (e) {}
+    })();
+  </script>
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
