@@ -1,1201 +1,323 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Prospect Biotech - The Pulse of Your Bioprocess">
+<meta name="theme-color" content="#0f1417">
+<title>Prospect Biotech — The pulse of your bioprocess</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pad:clamp(20px,5vw,72px);--max:1280px;--r:18px;
+  --bg:oklch(0.15 0.008 230);--bg2:oklch(0.19 0.01 230);--line:oklch(0.32 0.012 230);
+  --ink:oklch(0.97 0.005 230);--mute:oklch(0.74 0.012 230);
+  --c-base:oklch(0.78 0.01 230);--c-pur:oklch(0.80 0.14 70);--c-thi:oklch(0.80 0.14 170);--c-drug:oklch(0.80 0.14 300);
+  --logo:brightness(0) invert(1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:Geist,system-ui,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--ink);text-decoration:none}a:hover{color:var(--c-thi)}
+img{display:block;max-width:100%}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.mono{font-family:"Geist Mono",monospace;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase}
+.eyebrow{color:var(--mute);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c-thi);box-shadow:0 0 12px var(--c-thi)}
+h1,h2,h3{font-weight:600;letter-spacing:-.035em;line-height:1;text-wrap:balance}
+p{text-wrap:pretty}
+.acc{background:linear-gradient(95deg,var(--c-thi),var(--c-pur) 55%,var(--c-drug));-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;font-weight:500;font-size:15px;border:1px solid var(--line);transition:all .25s}
+.btn.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.pri:hover{background:var(--c-thi);border-color:var(--c-thi);color:oklch(0.15 0.01 230)}
+.btn:hover{border-color:var(--ink)}
 
+/* Nav */
+nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:color-mix(in oklch,var(--bg) 78%,transparent);border-bottom:1px solid color-mix(in oklch,var(--line) 60%,transparent)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px}
+nav .logo img{height:50px;filter:var(--logo);transition:height .35s ease}
+html.scrolled nav .logo img{height:28px}
+@media(max-width:700px){nav .logo img{height:36px}html.scrolled nav .logo img{height:26px}}
+nav .links{display:flex;gap:28px;font-size:15px}nav .links a{color:var(--mute)}nav .links a:hover{color:var(--ink)}
+nav .btn{padding:10px 18px}
+@media(max-width:860px){nav .links{display:none}}
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Prospect Biotech — The pulse of your bioprocess</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@300;400;500;600&amp;family=Poppins:wght@500;700;800;900&amp;family=Fraunces:ital,wght@0,400;0,700;0,900;1,700;1,900&amp;display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            navy: '#000B3D',
-            'navy-2': '#0A1454',
-            blue: { brand: '#0066FF', light: '#3D8BFF' },
-            orange: { brand: '#FF6B35', soft: '#FF8A5C' },
-            paper: '#F7F7F4',
-            ink: '#0B0F2C',
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
-          },
-          letterSpacing: {
-            'micro': '0.18em',
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #F7F7F4;
-      color: #0B0F2C;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-    .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+/* Hero */
+.fold{min-height:calc(100svh - 72px);display:flex;flex-direction:column}
+.fold>.hero{flex:1 1 auto;min-height:0!important}
+.fold>.benefits{flex:none}
+@media(max-width:700px){.fold{min-height:0}.fold>.benefits{display:none}}
+.hero{position:relative;overflow:hidden;padding:clamp(20px,3vw,44px) 0 clamp(20px,3vw,40px);min-height:max(460px,min(calc(100svh - 72px - 64px),860px));display:flex;align-items:center}
+.hero .wrap{position:relative;z-index:1;width:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+.hero h1{font-size:clamp(44px,min(9.6vw,12.5svh),148px);margin:clamp(10px,2svh,18px) 0 clamp(12px,2.4svh,22px)}
+.hero .lede{font-size:clamp(19px,1.8vw,25px);color:var(--mute);max-width:32ch}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.cells{position:absolute;top:50%;right:0;height:155%;width:auto;aspect-ratio:1/1;border-radius:50%;overflow:hidden;transform:translate(48%,-50%);-webkit-mask:radial-gradient(circle closest-side,#000 70%,transparent 100%);mask:radial-gradient(circle closest-side,#000 70%,transparent 100%)}
+.cells canvas{position:absolute;inset:0;width:100%;height:100%}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr}.cells{height:80%;opacity:.5}}
 
-    /* Diagram cards: bottom hover panel */
-    .diagram-card .hover-panel {
-      opacity: 0;
-      transition: opacity 380ms cubic-bezier(.2,.7,.2,1);
-      pointer-events: none;
-    }
-    .diagram-card:hover .hover-panel,
-    .diagram-card:focus-within .hover-panel {
-      opacity: 1;
-    }
-    @media (hover: none) {
-      .diagram-card .hover-panel { opacity: 1; }
-    }
-    .label {
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
-    .display {
-      font-family: 'Poppins', 'Inter', system-ui, sans-serif;
-      font-weight: 900;
-      letter-spacing: -0.045em;
-      line-height: 0.95;
-    }
-    .hero-bg {
-      background:
-        radial-gradient(45% 65% at 100% 30%, rgba(255,107,53,0.22) 0%, rgba(255,107,53,0) 65%),
-        radial-gradient(35% 50% at 95% 80%, rgba(255,170,120,0.15) 0%, rgba(255,170,120,0) 65%),
-        radial-gradient(40% 60% at 0% 50%, rgba(155,200,240,0.30) 0%, rgba(155,200,240,0) 65%),
-        radial-gradient(35% 45% at 50% 100%, rgba(180,210,240,0.20) 0%, rgba(180,210,240,0) 70%),
-        linear-gradient(180deg, #FFFFFF 0%, #F8FAFD 100%);
-    }
-    /* Continuation of hero — softer blobs fading into paper */
-    .bio-bg {
-      background:
-        radial-gradient(40% 50% at 95% 0%, rgba(255,107,53,0.10) 0%, rgba(255,107,53,0) 60%),
-        radial-gradient(35% 45% at 0% 15%, rgba(155,200,240,0.18) 0%, rgba(155,200,240,0) 65%),
-        radial-gradient(45% 35% at 50% 100%, rgba(180,210,240,0.10) 0%, rgba(180,210,240,0) 70%),
-        linear-gradient(180deg, #F8FAFD 0%, #F5F5EE 100%);
-    }
-    body[data-mood="clinical"] .bio-bg {
-      background:
-        radial-gradient(40% 45% at 95% 0%, rgba(0,102,255,0.10) 0%, rgba(0,102,255,0) 60%),
-        radial-gradient(35% 45% at 0% 15%, rgba(155,200,240,0.14) 0%, rgba(155,200,240,0) 65%),
-        linear-gradient(180deg, #FFFFFF 0%, #F5F5EE 100%);
-    }
-    body[data-mood="dark"] .bio-bg {
-      background:
-        radial-gradient(40% 50% at 95% 0%, rgba(255,107,53,0.16) 0%, rgba(255,107,53,0) 60%),
-        radial-gradient(35% 45% at 0% 15%, rgba(0,102,255,0.18) 0%, rgba(0,102,255,0) 65%),
-        linear-gradient(180deg, #0a0f29 0%, #07112d 100%);
-    }
-    .target-mark {
-      width: 56px; height: 56px; border-radius: 9999px;
-      border: 1.5px solid rgba(0,11,61,0.22);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .target-mark::after {
-      content: ''; width: 10px; height: 10px; border-radius: 9999px; background: #FF6B35;
-    }
-    .grid-bg {
-      background-image:
-        linear-gradient(to right, rgba(0,11,61,0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(0,11,61,0.05) 1px, transparent 1px);
-      background-size: 56px 56px;
-    }
-    .grid-bg-dark {
-      background-image:
-        linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
-      background-size: 56px 56px;
-    }
-    .glass {
-      background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.015) 100%);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .glass-light {
-      background: rgba(255,255,255,0.6);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(0,11,61,0.06);
-    }
-    /* fade-in on scroll */
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 900ms cubic-bezier(.16,1,.3,1), transform 900ms cubic-bezier(.16,1,.3,1); }
-    .reveal.in { opacity: 1; transform: none; }
-    .reveal-delay-1 { transition-delay: 90ms; }
-    .reveal-delay-2 { transition-delay: 180ms; }
-    .reveal-delay-3 { transition-delay: 270ms; }
-    .reveal-delay-4 { transition-delay: 360ms; }
-    .reveal-delay-5 { transition-delay: 450ms; }
+/* Benefits strip */
+.benefits{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.benefits .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.benefits .b{padding:14px 20px 14px 0;display:flex;flex-direction:column;gap:2px;justify-content:center}
+.benefits .b+.b{padding-left:20px;border-left:1px solid var(--line)}
+.benefits .b strong{font-size:16px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
+.benefits .b span{color:var(--mute);font-size:11px}
+@media(max-width:900px){.benefits .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}.benefits .b:nth-child(3){padding-left:0;border-left:0}.benefits .b{border-top:1px solid var(--line)}}
 
-    /* striped placeholder */
-    .placeholder-stripe {
-      background-image: repeating-linear-gradient(
-        135deg,
-        rgba(0,11,61,0.06) 0 8px,
-        rgba(0,11,61,0.02) 8px 16px
-      );
-    }
-    .placeholder-stripe-dark {
-      background-image: repeating-linear-gradient(
-        135deg,
-        rgba(255,255,255,0.05) 0 8px,
-        rgba(255,255,255,0.015) 8px 16px
-      );
-    }
+/* Sections */
+section{padding:clamp(80px,11vw,150px) 0}
+.sec-head{display:grid;gap:22px;max-width:900px;margin-bottom:clamp(44px,6vw,80px)}
+.sec-head h2{font-size:clamp(40px,5.6vw,80px)}
 
-    /* animated dot pulse */
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
-    }
-    .pulse-dot { animation: pulse-dot 1.6s ease-in-out infinite; }
+/* What we measure */
+.dims{display:grid;gap:18px;max-width:900px}
+.tier{color:var(--mute);display:flex;align-items:center;gap:14px;margin:30px 0 4px}
+.tier::after{content:"";flex:1;height:1px;background:var(--line)}
+.tier:first-child{margin-top:0}
+.statement{font-size:clamp(30px,3.6vw,48px);font-weight:600;letter-spacing:-.03em;line-height:1.05;margin:8px 0 10px}
+.card{--k:var(--c-base);position:relative;border:1px solid var(--line);border-radius:var(--r);padding:30px;transition:border-color .35s,background .35s;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 100% 0%,color-mix(in oklch,var(--k) 22%,transparent),transparent 60%);opacity:0;transition:opacity .4s}
+.card.on{border-color:var(--k);background:color-mix(in oklch,var(--bg2) 70%,transparent)}.card.on::before{opacity:1}
+.card>*{position:relative}
+.card .row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:22px}
+.card .num{color:var(--k)}
+.tag{color:var(--mute);border:1px solid var(--line);padding:4px 10px;border-radius:999px;font-size:11px}
+.card h3{font-size:clamp(28px,2.6vw,38px);margin-bottom:6px}
+.card h4{font-family:"Geist Mono",monospace;font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--k);margin:4px 0 12px}
+.card p{color:var(--mute);font-size:17px;max-width:44ch}
+.uses{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;align-items:center}
+.uses span{border:1px solid color-mix(in oklch,var(--k) 70%,transparent);padding:5px 12px;border-radius:999px;font-size:13px}
+.fams{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:22px;max-width:620px}
+.fam{border:1px solid color-mix(in oklch,var(--k) 55%,transparent);border-radius:12px;padding:14px 16px;display:grid;gap:2px}
+.fam .n{font-size:40px;font-weight:600;letter-spacing:-.04em;line-height:1;color:var(--k)}
+.fam b{font-weight:500;font-size:11.5px;color:var(--ink);margin-top:6px}
+.fam small{color:var(--mute);font-size:13px}
+@media(max-width:560px){.fams{grid-template-columns:1fr}}
 
-    /* spectral line */
-    @keyframes spectral-shift {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .spectral-track { animation: spectral-shift 24s linear infinite; }
+/* Applications */
+.app-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.app{border:1px solid var(--line);border-top:2px solid var(--k);border-radius:var(--r);padding:28px;display:grid;gap:12px;align-content:start;background:var(--bg2)}
+.app .num{color:var(--k)}.app h3{font-size:clamp(26px,2.4vw,34px);margin-top:28px}.app p{color:var(--mute)}
+@media(max-width:900px){.app-grid{grid-template-columns:1fr}}
 
-    /* scroll progress */
-    .scroll-progress {
-      position: fixed; top: 0; left: 0; height: 2px;
-      background: linear-gradient(90deg, #0066FF, #FF6B35);
-      width: 0%; z-index: 200;
-      transition: width 60ms linear;
-    }
+/* Future */
+.future{position:relative;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2)}
+.future .wrap{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:56px;align-items:end}
+.future h2{font-size:clamp(44px,6.4vw,96px);margin-top:22px}
+.future .side{display:grid;gap:18px}.future .side p{color:var(--mute);font-size:19px;max-width:34ch}
+.flag{display:flex;align-items:center;gap:14px;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.flag strong{font-size:18px;font-weight:600}.flag .tag{margin-left:auto;color:var(--c-thi);border-color:var(--c-thi)}
+@media(max-width:900px){.future .wrap{grid-template-columns:1fr}}
 
-    /* selection */
-    ::selection { background: rgba(0,102,255,0.18); color: #000B3D; }
+/* Platform */
+.kit{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.part{border:1px solid var(--line);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:10px;min-height:340px;background:var(--bg2)}
+.part .mono{color:var(--mute)}
+.part .big{flex:1;display:flex;align-items:center;font-size:clamp(48px,5vw,76px);font-weight:600;letter-spacing:-.05em;line-height:1}
+.part h3{font-size:24px}.part p{color:var(--mute)}
+.part.inst .big{font-size:clamp(30px,2.8vw,42px);letter-spacing:-.03em;line-height:1.05}
+.price{align-self:flex-start;margin-top:6px;padding:7px 12px;border-radius:999px;border:1px solid var(--c-thi);color:var(--c-thi);font-size:11px}.price:hover{background:var(--c-thi);color:var(--bg)}
+.part.ai{background:linear-gradient(160deg,color-mix(in oklch,var(--c-drug) 18%,var(--bg2)),var(--bg2) 60%)}
+.part.ai .big{font-family:"Instrument Serif",serif;font-weight:400;font-style:italic;font-size:clamp(30px,2.8vw,42px);letter-spacing:-.02em;line-height:1.05}
+@media(max-width:1000px){.kit{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.kit{grid-template-columns:1fr}}
 
-    /* link underline */
-    .link-underline {
-      background-image: linear-gradient(currentColor, currentColor);
-      background-size: 0% 1px;
-      background-repeat: no-repeat;
-      background-position: 0 100%;
-      transition: background-size 400ms cubic-bezier(.16,1,.3,1);
-    }
-    .link-underline:hover { background-size: 100% 1px; }
+/* Automated R&D */
+.rd .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,5vw,80px);align-items:center}
+.rd h2{font-size:clamp(40px,5.6vw,80px);margin:22px 0}.rd p{color:var(--mute);font-size:19px;max-width:38ch}
+.matrix-box{border:1px solid var(--line);border-radius:var(--r);padding:22px;background:var(--bg2)}
+.matrix-top{display:flex;justify-content:space-between;color:var(--mute);margin-bottom:14px}
+.matrix{display:grid;grid-template-columns:repeat(24,minmax(0,1fr));gap:4px}
+.matrix i{aspect-ratio:1;border-radius:3px;background:color-mix(in oklch,var(--line) 70%,transparent);transition:background .8s,box-shadow .8s}
+.matrix i.l{background:var(--k);box-shadow:0 0 10px color-mix(in oklch,var(--k) 60%,transparent)}
+.matrix i.d{background:color-mix(in oklch,var(--k) 45%,var(--bg2))}
+.matrix-foot{display:flex;justify-content:space-between;color:var(--mute);margin-top:14px}
+@media(max-width:900px){.rd .wrap{grid-template-columns:1fr}}
 
-    /* marker tick */
-    .tick { position: absolute; width: 1px; background: rgba(0,11,61,0.18); }
+/* Contact */
+.contact{text-align:center}
+.contact h2{font-size:clamp(44px,6.4vw,96px);margin:22px auto;max-width:14ch}
+.contact p{color:var(--mute);font-size:19px;max-width:48ch;margin:0 auto}
+.contact .ctas{display:flex;justify-content:center;gap:12px;margin-top:40px;flex-wrap:wrap}
+.contact .eyebrow{justify-content:center}
 
-    /* ============ TWEAK SYSTEM ============ */
-    /* Mood: Atelier (default) — already styled by hero-bg + bg-paper */
+/* Footer */
+footer{border-top:1px solid var(--line);padding:64px 0 36px;color:var(--mute);font-size:15px}
+footer .top{display:grid;grid-template-columns:minmax(0,2fr) repeat(3,minmax(0,1fr));gap:32px}
+footer img{height:26px;filter:var(--logo);margin-bottom:16px}
+footer h5{color:var(--ink);font-weight:500;font-size:15px;margin-bottom:12px}
+footer ul{list-style:none;display:grid;gap:8px}footer a{color:var(--mute)}
+footer .bot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:56px;padding-top:24px;border-top:1px solid var(--line);font-size:13px}
+@media(max-width:760px){footer .top{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="logo" href="#"><img src="assets/prospect-logo.png" alt="Prospect Biotech"></a>
+  <div class="links"><a href="#measure">What we measure</a><a href="#applications">Applications</a><a href="#future">Future</a><a href="#platform">Platform</a><a href="#rd">R&amp;D</a></div>
+  <a class="btn pri" href="#contact">Contact</a>
+</div></nav>
 
-    /* Mood: Clinical — pure white, blue only, no orange warmth */
-    body[data-mood="clinical"] .hero-bg {
-      background:
-        radial-gradient(60% 55% at 90% 18%, rgba(0,102,255,0.18) 0%, rgba(0,102,255,0) 60%),
-        radial-gradient(55% 60% at 5% 70%, rgba(120,170,230,0.22) 0%, rgba(120,170,230,0) 60%),
-        linear-gradient(180deg, #FFFFFF 0%, #F4F6FA 100%) !important;
-    }
-    body[data-mood="clinical"] { background: #FFFFFF !important; }
-    body[data-mood="clinical"] .bg-paper { background: #F4F6FA !important; }
-    body[data-mood="clinical"] .target-mark::after { background: #0066FF !important; }
-    body[data-mood="clinical"] .text-orange-brand,
-    body[data-mood="clinical"] .bg-orange-brand,
-    body[data-mood="clinical"] [class*="orange"] { color: #0066FF !important; }
-    body[data-mood="clinical"] .gradient-headline {
-      background-image: linear-gradient(90deg,#001A66 0%, #0066FF 100%) !important;
-    }
-
-    /* Mood: Lab Dark — navy on navy, cyan accents */
-    body[data-mood="dark"] {
-      background: #050818 !important;
-      color: #E8EEFF !important;
-    }
-    body[data-mood="dark"] .hero-bg {
-      background:
-        radial-gradient(55% 55% at 92% 18%, rgba(255,107,53,0.30) 0%, rgba(255,107,53,0) 60%),
-        radial-gradient(60% 65% at 5% 75%, rgba(0,180,255,0.22) 0%, rgba(0,180,255,0) 60%),
-        radial-gradient(45% 50% at 50% 100%, rgba(0,102,255,0.18) 0%, rgba(0,102,255,0) 65%),
-        linear-gradient(180deg, #050818 0%, #0A1030 100%) !important;
-    }
-    body[data-mood="dark"] .bg-paper { background: #0A1030 !important; }
-    body[data-mood="dark"] .text-navy { color: #E8EEFF !important; }
-    body[data-mood="dark"] .text-navy\/60,
-    body[data-mood="dark"] .text-navy\/65,
-    body[data-mood="dark"] .text-navy\/80 { color: rgba(232,238,255,0.65) !important; }
-    body[data-mood="dark"] .text-navy\/40,
-    body[data-mood="dark"] .text-navy\/50 { color: rgba(232,238,255,0.45) !important; }
-    body[data-mood="dark"] .border-navy\/8,
-    body[data-mood="dark"] .border-navy\/10,
-    body[data-mood="dark"] .border-navy\/15,
-    body[data-mood="dark"] .border-navy\/20 { border-color: rgba(232,238,255,0.12) !important; }
-    body[data-mood="dark"] .bg-navy { background: #0066FF !important; color: #fff !important; }
-    body[data-mono="dark"] .target-mark { border-color: rgba(232,238,255,0.3) !important; }
-    body[data-mood="dark"] .target-mark { border-color: rgba(232,238,255,0.3) !important; }
-    body[data-mood="dark"] .gradient-headline {
-      background-image: linear-gradient(90deg,#5BCBFF 0%, #0066FF 100%) !important;
-    }
-
-    /* Display Type variants */
-    body[data-type="editorial"] .display {
-      font-family: 'Fraunces', 'Georgia', serif !important;
-      font-weight: 900 !important;
-      font-style: italic !important;
-      letter-spacing: -0.02em !important;
-    }
-    body[data-type="technical"] .display {
-      font-family: 'Inter', system-ui, sans-serif !important;
-      font-weight: 800 !important;
-      letter-spacing: -0.055em !important;
-      line-height: 0.92 !important;
-    }
-
-    /* Headline accent variants — applied via .gradient-headline span */
-    .gradient-headline {
-      background-image: linear-gradient(90deg,#0066FF 0%, #5B9BFF 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      position: relative;
-      display: inline-block;
-    }
-    body[data-accent="highlight"] .gradient-headline {
-      background-image: none !important;
-      -webkit-background-clip: initial !important;
-      background-clip: initial !important;
-      color: #000B3D !important;
-    }
-    body[data-accent="highlight"][data-mood="dark"] .gradient-headline { color: #E8EEFF !important; }
-    body[data-accent="highlight"] .gradient-headline::before {
-      content: "";
-      position: absolute;
-      left: -0.05em; right: -0.05em;
-      bottom: 0.08em; height: 0.42em;
-      background: #FF6B35;
-      z-index: -1;
-      transform: skewX(-6deg);
-      border-radius: 3px;
-    }
-    body[data-accent="outlined"] .gradient-headline {
-      background-image: none !important;
-      -webkit-background-clip: initial !important;
-      background-clip: initial !important;
-      color: transparent !important;
-      -webkit-text-stroke: 2px #000B3D;
-    }
-    body[data-accent="outlined"][data-mood="dark"] .gradient-headline {
-      -webkit-text-stroke: 2px #5BCBFF;
-    }
-
-    /* ============ TWEAKS PANEL UI ============ */
-    #tweaks-panel {
-      position: fixed; right: 24px; bottom: 24px; z-index: 9999;
-      width: 320px;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(0,11,61,0.10);
-      border-radius: 18px;
-      padding: 18px 18px 16px;
-      font-family: 'Inter', system-ui, sans-serif;
-      box-shadow: 0 24px 60px -20px rgba(0,11,61,0.25);
-      display: none;
-    }
-    #tweaks-panel.open { display: block; }
-    #tweaks-panel .tw-head {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 14px;
-    }
-    #tweaks-panel .tw-title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: #000B3D;
-    }
-    #tweaks-panel .tw-close {
-      width: 22px; height: 22px; border: none; background: transparent;
-      cursor: pointer; color: rgba(0,11,61,0.55); font-size: 16px; line-height: 1;
-    }
-    #tweaks-panel .tw-close:hover { color: #000B3D; }
-    #tweaks-panel .tw-section { margin-bottom: 14px; }
-    #tweaks-panel .tw-section:last-child { margin-bottom: 0; }
-    #tweaks-panel .tw-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
-      color: rgba(0,11,61,0.55); margin-bottom: 7px;
-    }
-    #tweaks-panel .tw-seg {
-      display: grid; gap: 4px;
-      background: rgba(0,11,61,0.05);
-      border-radius: 10px; padding: 4px;
-    }
-    #tweaks-panel .tw-seg.cols-3 { grid-template-columns: repeat(3, 1fr); }
-    #tweaks-panel .tw-opt {
-      border: none; background: transparent; cursor: pointer;
-      padding: 8px 6px; border-radius: 7px;
-      font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
-      color: rgba(0,11,61,0.7);
-      transition: all 0.18s ease;
-    }
-    #tweaks-panel .tw-opt:hover { color: #000B3D; }
-    #tweaks-panel .tw-opt.active {
-      background: #000B3D; color: #fff;
-      box-shadow: 0 4px 12px -4px rgba(0,11,61,0.4);
-    }
-    #tweaks-toggle {
-      position: fixed; right: 24px; bottom: 24px; z-index: 9998;
-      width: 48px; height: 48px; border-radius: 50%;
-      background: #000B3D; color: #fff; border: none; cursor: pointer;
-      box-shadow: 0 12px 30px -8px rgba(0,11,61,0.5);
-      display: none; align-items: center; justify-content: center;
-      transition: transform 0.2s ease;
-    }
-    #tweaks-toggle.show { display: flex; }
-    #tweaks-toggle:hover { transform: scale(1.08); }
-    #tweaks-panel.open ~ #tweaks-toggle { display: none; }
-  </style>
-<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, system-ui, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:"JetBrains Mono", ui-monospace, monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-6{inset:1.5rem}.inset-x-0{left:0px;right:0px}.top-0{top:0px}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-12{margin-bottom:3rem}.mb-16{margin-bottom:4rem}.mb-2{margin-bottom:0.5rem}.mb-20{margin-bottom:5rem}.mb-3{margin-bottom:0.75rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-10{margin-top:2.5rem}.mt-3{margin-top:0.75rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-\[4\/5\]{aspect-ratio:4/5}.h-10{height:2.5rem}.h-12{height:3rem}.h-14{height:3.5rem}.h-2{height:0.5rem}.h-32{height:8rem}.h-48{height:12rem}.h-9{height:2.25rem}.h-full{height:100%}.h-px{height:1px}.w-10{width:2.5rem}.w-14{width:3.5rem}.w-2{width:0.5rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-auto{width:auto}.w-full{width:100%}.max-w-4xl{max-width:56rem}.max-w-\[1360px\]{max-width:1360px}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.max-w-xl{max-width:36rem}.flex-1{flex:1 1 0%}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-10{gap:2.5rem}.gap-12{gap:3rem}.gap-16{gap:4rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-px{gap:1px}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-navy\/10 > :not([hidden]) ~ :not([hidden]){border-color:rgb(0 11 61 / 0.1)}.self-end{align-self:flex-end}.self-center{align-self:center}.overflow-hidden{overflow:hidden}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-y{border-top-width:1px;border-bottom-width:1px}.border-b{border-bottom-width:1px}.border-r{border-right-width:1px}.border-t{border-top-width:1px}.border-blue-brand\/30{border-color:rgb(0 102 255 / 0.3)}.border-navy\/10{border-color:rgb(0 11 61 / 0.1)}.border-navy\/15{border-color:rgb(0 11 61 / 0.15)}.border-white\/20{border-color:rgb(255 255 255 / 0.2)}.bg-blue-brand{--tw-bg-opacity:1;background-color:rgb(0 102 255 / var(--tw-bg-opacity, 1))}.bg-navy{--tw-bg-opacity:1;background-color:rgb(0 11 61 / var(--tw-bg-opacity, 1))}.bg-navy\/30{background-color:rgb(0 11 61 / 0.3)}.bg-navy\/60{background-color:rgb(0 11 61 / 0.6)}.bg-orange-brand{--tw-bg-opacity:1;background-color:rgb(255 107 53 / var(--tw-bg-opacity, 1))}.bg-paper{--tw-bg-opacity:1;background-color:rgb(247 247 244 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/5{background-color:rgb(255 255 255 / 0.05)}.object-contain{object-fit:contain}.p-10{padding:2.5rem}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-8{padding:2rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-24{padding-top:6rem;padding-bottom:6rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.py-32{padding-top:8rem;padding-bottom:8rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pb-10{padding-bottom:2.5rem}.pb-32{padding-bottom:8rem}.pl-5{padding-left:1.25rem}.pl-6{padding-left:1.5rem}.pr-4{padding-right:1rem}.pr-5{padding-right:1.25rem}.pt-20{padding-top:5rem}.pt-6{padding-top:1.5rem}.pt-60{padding-top:15rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-5xl{font-size:3rem;line-height:1}.text-\[11px\]{font-size:11px}.text-\[15px\]{font-size:15px}.text-\[clamp\(3rem\2c 8vw\2c 7rem\)\]{font-size:clamp(3rem,8vw,7rem)}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-medium{font-weight:500}.leading-relaxed{line-height:1.625}.text-blue-brand{--tw-text-opacity:1;color:rgb(0 102 255 / var(--tw-text-opacity, 1))}.text-navy{--tw-text-opacity:1;color:rgb(0 11 61 / var(--tw-text-opacity, 1))}.text-navy\/30{color:rgb(0 11 61 / 0.3)}.text-navy\/40{color:rgb(0 11 61 / 0.4)}.text-navy\/50{color:rgb(0 11 61 / 0.5)}.text-navy\/60{color:rgb(0 11 61 / 0.6)}.text-navy\/70{color:rgb(0 11 61 / 0.7)}.text-navy\/80{color:rgb(0 11 61 / 0.8)}.text-orange-brand{--tw-text-opacity:1;color:rgb(255 107 53 / var(--tw-text-opacity, 1))}.text-orange-brand\/60{color:rgb(255 107 53 / 0.6)}.text-orange-brand\/70{color:rgb(255 107 53 / 0.7)}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-white\/30{color:rgb(255 255 255 / 0.3)}.text-white\/40{color:rgb(255 255 255 / 0.4)}.text-white\/50{color:rgb(255 255 255 / 0.5)}.text-white\/60{color:rgb(255 255 255 / 0.6)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-500{transition-duration:500ms}.hover\:border-blue-brand\/40:hover{border-color:rgb(0 102 255 / 0.4)}.hover\:border-navy:hover{--tw-border-opacity:1;border-color:rgb(0 11 61 / var(--tw-border-opacity, 1))}.hover\:border-navy\/40:hover{border-color:rgb(0 11 61 / 0.4)}.hover\:border-white\/60:hover{border-color:rgb(255 255 255 / 0.6)}.hover\:bg-blue-brand:hover{--tw-bg-opacity:1;background-color:rgb(0 102 255 / var(--tw-bg-opacity, 1))}.hover\:bg-navy:hover{--tw-bg-opacity:1;background-color:rgb(0 11 61 / var(--tw-bg-opacity, 1))}.hover\:bg-orange-brand:hover{--tw-bg-opacity:1;background-color:rgb(255 107 53 / var(--tw-bg-opacity, 1))}.hover\:text-blue-brand:hover{--tw-text-opacity:1;color:rgb(0 102 255 / var(--tw-text-opacity, 1))}.hover\:text-navy:hover{--tw-text-opacity:1;color:rgb(0 11 61 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:translate-x-0\.5{--tw-translate-x:0.125rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:translate-x-1{--tw-translate-x:0.25rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:border-blue-brand{--tw-border-opacity:1;border-color:rgb(0 102 255 / var(--tw-border-opacity, 1))}.group:hover .group-hover\:border-orange-brand{--tw-border-opacity:1;border-color:rgb(255 107 53 / var(--tw-border-opacity, 1))}.group:hover .group-hover\:bg-blue-brand{--tw-bg-opacity:1;background-color:rgb(0 102 255 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-orange-brand\/10{background-color:rgb(255 107 53 / 0.1)}.group:hover .group-hover\:text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}@media (min-width: 640px){.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}@media (min-width: 768px){.md\:col-span-2{grid-column:span 2 / span 2}.md\:col-span-3{grid-column:span 3 / span 3}.md\:col-span-5{grid-column:span 5 / span 5}.md\:inline{display:inline}.md\:flex{display:flex}.md\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:items-center{align-items:center}.md\:p-16{padding:4rem}.md\:text-6xl{font-size:3.75rem;line-height:1}}@media (min-width: 1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-6{grid-column:span 6 / span 6}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:col-start-8{grid-column-start:8}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:text-7xl{font-size:4.5rem;line-height:1}}</style></head>
-<body data-new-gr-c-s-check-loaded="14.1286.0" data-gr-ext-installed="" data-cc-id="cc-1" style="cursor: crosshair; background-color: rgb(245, 245, 238);">
-
-  <!-- ============ NAV ============ -->
-  <nav id="nav" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
-    <div class="max-w-[1360px] mx-auto px-8 h-32 flex items-center justify-between transition-all duration-500" id="navInner">
-      <a href="#" class="flex items-center gap-3 group">
-        <img id="navLogo" src="assets/prospect-logo.png" alt="Prospect Biotech" class="h-24 w-auto object-contain transition-all duration-500">
-      </a>
-
-      <div class="hidden md:flex items-center gap-10">
-        <a href="#technology" class="label text-navy/70 hover:text-navy link-underline" style="font-weight: 900">Technology</a>
-        <a href="#applications" class="label text-navy/70 hover:text-navy link-underline" style="font-weight: 900">Applications</a>
-        <a href="#company" class="label text-navy/70 hover:text-navy link-underline" style="font-weight: 900">Company</a>
-      </div>
-
-      <div class="flex items-center gap-4">
-        <a href="#contact" class="inline-flex items-center gap-2 bg-navy text-white pl-5 pr-4 py-2.5 rounded-full label hover:bg-blue-brand transition-colors">
-          Contact
-        </a>
-      </div>
+<div class="fold">
+  <header class="hero"><div class="wrap">
+    <div>
+      <div class="eyebrow mono">Designed for what's next</div>
+      <h1>The <span class="acc">Pulse</span> of Your Bioprocess.</h1>
+      <p class="lede">Precision analytics for automated labs that demand quick metabolic feedback.</p>
+      <div class="ctas"><a class="btn pri" href="#measure">What we measure →</a><a class="btn" href="#applications">View Applications</a></div>
     </div>
-  </nav>
+    <div class="cells" aria-hidden="true"><canvas id="cells"></canvas></div>
+  </div></header>
 
-  <!-- ============ HERO ============ -->
-  <section class="relative pt-40 pb-16 overflow-hidden hero-bg flex items-center" style="color: rgb(99, 110, 189)">
-    <div class="relative max-w-[1360px] mx-auto px-8 w-full" style="padding: 0px 32px">
-      <div class="grid lg:grid-cols-12 gap-12 items-center" style="margin: -40px 0px 20px 20px">
-        <div class="lg:col-span-7">
-          <div class="reveal flex items-center gap-3 mb-6 in">
-            <span class="w-8 h-[2px] bg-blue-brand"></span>
-            <span class="label text-blue-brand font-bold tracking-[0.22em]" style="line-height: 1.5; font-size: 12px; font-family: &quot;JetBrains Mono&quot;; opacity: 3; font-weight: 900">Designed for what's next</span>
-          </div>
-          <h1 class="reveal reveal-delay-1 display text-[clamp(3rem,7.5vw,6.25rem)] text-navy in">
-            The Pulse of Your<br>
-            <span class="gradient-headline" style="background-image: linear-gradient(90deg,#0066FF 0%, #5B9BFF 100%);">Bioprocess.</span>
-          </h1>
-          <p class="reveal reveal-delay-2 mt-8 max-w-lg text-lg md:text-xl text-navy/65 leading-relaxed in" style="font-family:'Poppins',sans-serif;font-weight:500">
-            Precision SERS analytics for automated labs that demand instant
-            metabolic feedback.
-          </p>
-          <div class="reveal reveal-delay-3 mt-10 flex flex-wrap items-center gap-4 in" style="font-family:'Poppins',sans-serif">
-            <a href="#technology" class="inline-flex items-center gap-3 bg-blue-brand text-white px-10 py-5 rounded-full text-sm font-bold uppercase tracking-[0.18em] hover:bg-navy transition-all shadow-[0_14px_40px_-12px_rgba(0,102,255,0.55)] hover:-translate-y-0.5">
-              Our Technology
-              <svg width="16" height="16" viewBox="0 0 14 14" fill="none"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            </a>
-            <a href="#applications" class="inline-flex items-center gap-2 px-10 py-5 rounded-full border-2 border-navy/20 text-navy hover:border-navy hover:bg-white/60 transition-all text-sm font-bold uppercase tracking-[0.18em] bg-white/40">
-              View Applications
-            </a>
-          </div>
-        </div>
-        <div class="lg:col-span-5 relative reveal reveal-delay-2 in">
-          <div class="absolute -inset-8 rounded-full" style="background: radial-gradient(60% 60% at 50% 50%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 70%);"></div>
-          <svg viewBox="0 0 400 400" class="absolute inset-0 w-full h-full" style="opacity:0.18">
-            <circle cx="200" cy="200" r="120" stroke="#0066FF" stroke-width="1" fill="none"/>
-            <circle cx="200" cy="200" r="160" stroke="#0066FF" stroke-width="1" fill="none"/>
-            <circle cx="200" cy="200" r="195" stroke="#0066FF" stroke-width="1" fill="none"/>
-          </svg>
-          <img src="assets/prospect-cartridge.png" alt="Prospect multi-sensor cartridge" class="relative w-full max-w-[460px] mx-auto" style="filter: drop-shadow(0 30px 50px rgba(0,11,61,0.20)); object-fit: scale-down; width: 400.836px">
-        </div>
+  <div class="benefits"><div class="wrap">
+    <div class="b"><span class="mono">Early signals</span><strong>Minutes, not days.</strong></div>
+    <div class="b"><span class="mono">High multiplexing</span><strong>Dozens of analytes at once.</strong></div>
+    <div class="b"><span class="mono">High sensitivity</span><strong>Unmatched sensitivity.</strong></div>
+    <div class="b"><span class="mono">Lower cost</span><strong>Lower cost per insight.</strong></div>
+  </div></div>
+</div>
+
+<section id="measure"><div class="wrap">
+  <div class="sec-head"><div class="eyebrow mono">What we measure</div><h2>Hear what your cells <span class="acc">are saying.</span></h2></div>
+  <div class="dims">
+    <div class="tier mono">The baseline</div>
+    <article class="card" style="--k:var(--c-base)"><div class="row"><span class="num mono">01</span><span class="tag mono">Included</span></div><h3>Growth and feeding.</h3><h4>Glucose &amp; lactate</h4><p>Know when your cells eat, grow and need more.</p></article>
+
+    <div class="tier mono">A new dimension</div>
+    <p class="statement">Then, a <span class="acc">new dimension.</span></p>
+    <article class="card" style="--k:var(--c-pur)"><div class="row"><span class="num mono">02</span><span class="tag mono">New</span></div><h3>Stress and cell damage.</h3><h4>Nucleotides · Aromatic amino acids</h4><p>Each kind of damage leaves its own fingerprint. Now you can read it.</p>
+      <div class="fams">
+        <div class="fam"><span class="n">10</span><b class="mono">Purines</b><small>ATP → uric acid</small></div>
+        <div class="fam"><span class="n">4</span><b class="mono">Pyrimidines</b><small>Uridine, cytidine…</small></div>
+        <div class="fam"><span class="n">3</span><b class="mono">Aromatic AAs</b><small>Trp, Tyr, Phe</small></div>
       </div>
+    </article>
+    <article class="card" style="--k:var(--c-thi)"><div class="row"><span class="num mono">03</span><span class="tag mono">New</span></div><h3>Oxidative stress, live.</h3><h4>Thiols</h4><p>Fragile molecules that degrade in minutes. We catch them on the spot.</p><div class="uses"><span>GSH</span><span>GSSG</span><span>Cysteine</span><span>Homocysteine</span></div></article>
 
-      <!-- Hero feature band -->
-      <div class="reveal reveal-delay-3 mt-8 grid grid-cols-2 md:grid-cols-4 rounded-2xl overflow-hidden border border-navy/10 bg-white/55 backdrop-blur-md shadow-[0_24px_70px_-46px_rgba(0,11,61,0.45)]" style="margin: -40px 0px 0px">
-        <div class="flex items-center gap-4 p-5 md:p-6 border-r border-navy/10">
-          <span class="w-12 h-12 rounded-full bg-white/70 flex items-center justify-center text-blue-brand shadow-[inset_0_0_0_1px_rgba(0,102,255,0.12),0_10px_28px_-20px_rgba(0,11,61,0.45)] flex-shrink-0">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13" r="7"/><path d="M12 13V8m4.6 1.4 1.6-1.6M9 2h6"/></svg>
-          </span>
-          <div>
-            <div class="label text-blue-brand font-bold mb-1.5">Early signals</div>
-            <p class="text-[13px] leading-snug text-navy/60 m-0">Detect metabolic shifts within minutes.</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-4 p-5 md:p-6 md:border-r border-navy/10">
-          <span class="w-12 h-12 rounded-full bg-white/70 flex items-center justify-center text-blue-brand shadow-[inset_0_0_0_1px_rgba(0,102,255,0.12),0_10px_28px_-20px_rgba(0,11,61,0.45)] flex-shrink-0">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="7" cy="7" r="1.8"/><circle cx="12" cy="7" r="1.8"/><circle cx="17" cy="7" r="1.8"/><circle cx="7" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="17" cy="12" r="1.8"/><circle cx="7" cy="17" r="1.8"/><circle cx="12" cy="17" r="1.8"/><circle cx="17" cy="17" r="1.8"/></svg>
-          </span>
-          <div>
-            <div class="label text-blue-brand font-bold mb-1.5">High multiplexing</div>
-            <p class="text-[13px] leading-snug text-navy/60 m-0">Measure dozens of analytes simultaneously.</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-4 p-5 md:p-6 border-r border-navy/10 border-t md:border-t-0">
-          <span class="w-12 h-12 rounded-full bg-white/70 flex items-center justify-center text-blue-brand shadow-[inset_0_0_0_1px_rgba(0,102,255,0.12),0_10px_28px_-20px_rgba(0,11,61,0.45)] flex-shrink-0">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
-          </span>
-          <div>
-            <div class="label text-blue-brand font-bold mb-1.5">High sensitivity</div>
-            <p class="text-[13px] leading-snug text-navy/60 m-0">SERS-based detection for unmatched sensitivity.</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-4 p-5 md:p-6 border-t md:border-t-0">
-          <span class="w-12 h-12 rounded-full bg-white/70 flex items-center justify-center text-blue-brand shadow-[inset_0_0_0_1px_rgba(0,102,255,0.12),0_10px_28px_-20px_rgba(0,11,61,0.45)] flex-shrink-0">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 6v12M15 9.5c-.7-.9-1.7-1.3-3-1.3-1.6 0-2.7.8-2.7 2s1 1.7 2.9 2.1c2 .4 3 1 3 2.4 0 1.2-1.1 2.1-3.1 2.1-1.5 0-2.6-.5-3.3-1.5"/></svg>
-          </span>
-          <div>
-            <div class="label text-blue-brand font-bold mb-1.5">Lower cost</div>
-            <p class="text-[13px] leading-snug text-navy/60 m-0">More data. Less waste. Lower cost per insight.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ METABOLITES (BIO STORY) ============ -->
-  <section class="py-32 bio-bg relative">
-    <div class="max-w-[1360px] mx-auto px-8">
-      <!-- Top: headline + lead -->
-      <div class="grid lg:grid-cols-12 gap-12 items-end mb-12">
-        <div class="lg:col-span-7 reveal">
-          <h2 class="display text-[clamp(2.75rem,6.5vw,5.25rem)] text-navy leading-[0.95]">
-            Metabolites speak<br>before cells fail.<br>
-            <span class="text-blue-brand" style="color: rgb(255, 135, 94)">We listen in real time.</span>
-          </h2>
-        </div>
-        <div class="lg:col-span-5 reveal reveal-delay-1">
-          <p class="text-lg text-navy/60 leading-relaxed">
-            Current metabolomics tools are powerful, but slow, expensive or
-            low-throughput. Prospect brings fast, multiplexed metabolic sensing
-            directly to biofluids and cell therapy workflows.
-          </p>
-        </div>
-      </div>
-
-      <!-- Two-card diagram grid -->
-      <div class="reveal reveal-delay-2 grid lg:grid-cols-2 gap-6">
-
-        <!-- ===== Card 1: Early biochemical signals ===== -->
-        <article class="diagram-card bg-white rounded-3xl border border-navy/10 overflow-hidden shadow-[0_30px_80px_-50px_rgba(0,11,61,0.35)]">
-          <svg viewBox="0 0 1536 1024" role="img" aria-label="Early biochemical signals diagram" class="w-full h-auto block">
-            <defs>
-              <radialGradient id="cellGlow" cx="42%" cy="35%" r="70%">
-                <stop offset="0%" stop-color="#ffffff" stop-opacity=".8"/>
-                <stop offset="55%" stop-color="#c4bcff" stop-opacity=".52"/>
-                <stop offset="100%" stop-color="#8e82ef" stop-opacity=".2"/>
-              </radialGradient>
-              <linearGradient id="bottomPanel" x1="0" x2="1">
-                <stop offset="0%" stop-color="#f0f3ff"/>
-                <stop offset="100%" stop-color="#e9edff"/>
-              </linearGradient>
-            </defs>
-
-            <g transform="translate(76 84)">
-              <circle cx="52" cy="52" r="52" fill="#0066FF"/>
-              <circle cx="52" cy="52" r="34" fill="none" stroke="#fff" stroke-width="6"/>
-              <path d="M52 26v31l22 16" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-              <text x="130" y="54" fill="#000B3D" font-size="44" font-weight="900" font-family="Inter, Arial, sans-serif" letter-spacing="-1.5">Early biochemical</text>
-              <text x="130" y="108" fill="#000B3D" font-size="44" font-weight="900" font-family="Inter, Arial, sans-serif" letter-spacing="-1.5">signals</text>
-              <line x1="0" y1="150" x2="98" y2="150" stroke="#0066FF" stroke-width="5"/>
-            </g>
-
-            <text x="76" y="306" fill="#000B3D" opacity="0.6" font-size="26" font-family="Inter, Arial, sans-serif">Metabolic shifts can appear</text>
-            <text x="76" y="346" fill="#000B3D" opacity="0.6" font-size="26" font-family="Inter, Arial, sans-serif">within minutes, long before</text>
-            <text x="76" y="386" fill="#000B3D" opacity="0.6" font-size="26" font-family="Inter, Arial, sans-serif">phenotype or viability</text>
-            <text x="76" y="426" fill="#000B3D" opacity="0.6" font-size="26" font-family="Inter, Arial, sans-serif">changes are visible.</text>
-
-            <g transform="translate(76 484)">
-              <rect x="0" y="0" width="380" height="68" rx="34" fill="#EEF3FF"/>
-              <circle cx="44" cy="34" r="19" fill="none" stroke="#0066FF" stroke-width="4"/>
-              <path d="M44 20v17l12 9" fill="none" stroke="#0066FF" stroke-width="4" stroke-linecap="round"/>
-              <text x="82" y="44" fill="#0066FF" font-size="22" font-weight="900" font-family="Inter, Arial, sans-serif">Change within minutes</text>
-            </g>
-
-            <g>
-              <ellipse cx="752" cy="650" rx="120" ry="18" fill="#000B3D" opacity=".08"/>
-              <circle cx="752" cy="430" r="194" fill="url(#cellGlow)" stroke="#9f91ef" stroke-width="3"/>
-              <circle cx="752" cy="432" r="79" fill="#8673dc" stroke="#6f5ed0" stroke-width="2"/>
-              <ellipse cx="698" cy="378" rx="17" ry="35" fill="#fff" opacity=".25" transform="rotate(35 698 378)"/>
-              <circle cx="628" cy="468" r="18" fill="#fff" opacity=".34" stroke="#8e80e3" stroke-width="2"/>
-              <circle cx="650" cy="520" r="14" fill="#fff" opacity=".28" stroke="#8e80e3" stroke-width="2"/>
-              <circle cx="682" cy="548" r="8" fill="#a89df1" opacity=".38"/>
-              <circle cx="840" cy="310" r="7" fill="#a89df1" opacity=".45"/>
-              <circle cx="864" cy="388" r="7" fill="#a89df1" opacity=".28"/>
-              <circle cx="862" cy="410" r="6" fill="#a89df1" opacity=".28"/>
-              <circle cx="858" cy="458" r="7" fill="#a89df1" opacity=".36"/>
-              <path d="M860 358 L1042 144" stroke="#0066FF" stroke-width="3" stroke-dasharray="12 12" fill="none"/>
-              <path d="M862 390 L1044 276" stroke="#0066FF" stroke-width="3" stroke-dasharray="12 12" fill="none"/>
-              <path d="M862 430 L1044 430" stroke="#0066FF" stroke-width="3" stroke-dasharray="12 12" fill="none"/>
-              <path d="M862 462 L1044 548" stroke="#0066FF" stroke-width="3" stroke-dasharray="12 12" fill="none"/>
-              <path d="M862 486 L1044 680" stroke="#0066FF" stroke-width="3" stroke-dasharray="12 12" fill="none"/>
-            </g>
-
-            <g font-family="Inter, Arial, sans-serif" font-weight="900">
-              <text x="1102" y="141" fill="#FF6B35" font-size="30">Amino acids</text>
-              <text x="1102" y="283" fill="#7652d6" font-size="30">Lipids</text>
-              <text x="1102" y="439" fill="#4a7d3d" font-size="30">Carbohydrates</text>
-              <text x="1102" y="567" fill="#d34f55" font-size="30">Nucleotides</text>
-              <text x="1102" y="699" fill="#238da0" font-size="30">Energy metabolites</text>
-            </g>
-
-            <g transform="translate(76 620)" font-family="Inter, Arial, sans-serif" fill="#000B3D" text-anchor="middle">
-              <g>
-                <circle cx="46" cy="0" r="26" fill="none" stroke="#0066FF" stroke-width="4"/>
-                <path d="M46-16v18l14 9" fill="none" stroke="#0066FF" stroke-width="4" stroke-linecap="round"/>
-                <text x="46" y="58" font-size="18" font-weight="800">Early</text>
-              </g>
-              <g transform="translate(142 0)">
-                <path d="M20-12c16-18 38-18 54 0 9 11 9 25 0 36-16 18-38 18-54 0-9-11-9-25 0-36Z" fill="none" stroke="#0066FF" stroke-width="4"/>
-                <path d="M2 34 88-34" stroke="#0066FF" stroke-width="4" stroke-linecap="round"/>
-                <circle cx="46" cy="0" r="12" fill="none" stroke="#0066FF" stroke-width="4"/>
-                <text x="46" y="58" font-size="18" font-weight="800">Not visible</text>
-              </g>
-              <g transform="translate(290 0)">
-                <path d="M8 26h70M18 26V8M34 26V-4M50 26V-16M66 26V-30" stroke="#0066FF" stroke-width="4" stroke-linecap="round"/>
-                <path d="M8 0 26-14 42-4 78-40M78-40v18M78-40H60" fill="none" stroke="#0066FF" stroke-width="4" stroke-linecap="round"/>
-                <text x="43" y="58" font-size="18" font-weight="800">Actionable</text>
-              </g>
-            </g>
-
-            <g class="hover-panel" transform="translate(76 800)">
-              <rect x="0" y="0" width="1384" height="176" rx="20" fill="url(#bottomPanel)" stroke="#E1E7F2"/>
-              <circle cx="86" cy="88" r="42" fill="none" stroke="#0066FF" stroke-width="6"/>
-              <path d="M86 58v35l26 18" fill="none" stroke="#0066FF" stroke-width="6" stroke-linecap="round"/>
-              <text x="168" y="78" fill="#000B3D" font-size="30" font-weight="900" font-family="Inter, Arial, sans-serif" letter-spacing="-0.5">Metabolic changes happen fast.</text>
-              <text x="168" y="122" fill="#000B3D" opacity="0.65" font-size="24" font-family="Inter, Arial, sans-serif">Detect early. Act sooner. Improve outcomes.</text>
-              <g transform="translate(790 28)" fill="none" stroke="#0066FF" stroke-width="3" stroke-linecap="round">
-                <path d="M0 112H280M0 112V10"/>
-                <path d="M280 112l-12-8M280 112l-12 8M0 10l-8 12M0 10l8 12"/>
-                <path d="M30 100 C70 98 72 22 130 22 H160" stroke-width="5"/>
-                <path d="M30 102 C120 102 118 28 200 28 H230" stroke-dasharray="12 12"/>
-                <text x="-20" y="68" transform="rotate(-90 -20 68)" fill="#000B3D" stroke="none" font-size="18" font-weight="800" font-family="Inter, Arial, sans-serif">Change</text>
-                <text x="125" y="140" fill="#000B3D" stroke="none" font-size="18" font-weight="800" font-family="Inter, Arial, sans-serif">Time</text>
-              </g>
-              <g transform="translate(1088 42)" font-family="Inter, Arial, sans-serif">
-                <line x1="0" y1="12" x2="42" y2="12" stroke="#0066FF" stroke-width="5" stroke-linecap="round"/>
-                <text x="62" y="20" fill="#000B3D" font-size="18" font-weight="800">Metabolic change</text>
-                <text x="62" y="46" fill="#000B3D" font-size="18" font-weight="800">(minutes)</text>
-                <line x1="0" y1="78" x2="42" y2="78" stroke="#0066FF" stroke-width="3" stroke-dasharray="10 10"/>
-                <text x="62" y="86" fill="#000B3D" font-size="18" font-weight="800">Phenotypic change</text>
-                <text x="62" y="112" fill="#000B3D" font-size="18" font-weight="800">(hours/days)</text>
-              </g>
-            </g>
-          </svg>
-        </article>
-
-        <!-- ===== Card 2: Analytical techniques sensitivity vs cost (existing chart) ===== -->
-        <article class="diagram-card bg-white rounded-3xl border border-navy/10 overflow-hidden shadow-[0_30px_80px_-50px_rgba(0,11,61,0.35)]">
-          <svg viewBox="0 0 1536 1024" role="img" aria-label="Analytical techniques sensitivity versus cost chart" class="w-full h-auto block">
-            <defs>
-              <linearGradient id="bbIcon" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#3D8BFF"/>
-                <stop offset="1" stop-color="#0066FF"/>
-              </linearGradient>
-              <radialGradient id="bbHplc" cx="38%" cy="30%" r="70%">
-                <stop offset="0" stop-color="#dbe7ff"/>
-                <stop offset="1" stop-color="#a8c1f5"/>
-              </radialGradient>
-              <radialGradient id="bbNmr" cx="35%" cy="30%" r="72%">
-                <stop offset="0" stop-color="#ffe7b8"/>
-                <stop offset="1" stop-color="#ffd087"/>
-              </radialGradient>
-              <radialGradient id="bbRaman" cx="35%" cy="30%" r="72%">
-                <stop offset="0" stop-color="#d5f4de"/>
-                <stop offset="1" stop-color="#9fe0bc"/>
-              </radialGradient>
-              <radialGradient id="bbFtir" cx="35%" cy="30%" r="72%">
-                <stop offset="0" stop-color="#d9f5f4"/>
-                <stop offset="1" stop-color="#a9e2e0"/>
-              </radialGradient>
-              <radialGradient id="bbSers" cx="35%" cy="30%" r="72%">
-                <stop offset="0" stop-color="#ffffff"/>
-                <stop offset="1" stop-color="#ffe1cf"/>
-              </radialGradient>
-              <linearGradient id="analysisBottomPanel" x1="0" x2="1">
-                <stop offset="0%" stop-color="#f0f3ff"/>
-                <stop offset="100%" stop-color="#e9edff"/>
-              </linearGradient>
-            </defs>
-
-            <g transform="translate(76 84)">
-              <circle cx="44" cy="44" r="44" fill="url(#bbIcon)"/>
-              <path d="M24 52 42 34 58 52 74 30" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="24" cy="52" r="5" fill="#fff"/>
-              <circle cx="42" cy="34" r="5" fill="#fff"/>
-              <circle cx="58" cy="52" r="5" fill="#fff"/>
-              <circle cx="74" cy="30" r="5" fill="#fff"/>
-              <text x="124" y="40" fill="#000B3D" font-size="44" font-weight="900" font-family="Inter, Arial, sans-serif" letter-spacing="-1.5">Analytical techniques:</text>
-              <text x="124" y="92" fill="#000B3D" font-size="44" font-weight="900" font-family="Inter, Arial, sans-serif" letter-spacing="-1.5">sensitivity vs. cost</text>
-              <line x1="0" y1="132" x2="88" y2="132" stroke="#0066FF" stroke-width="5"/>
-            </g>
-
-            <text x="76" y="306" fill="#000B3D" opacity="0.6" font-size="26" font-family="Inter, Arial, sans-serif">Different analytical techniques</text>
-            <text x="76" y="346" fill="#000B3D" opacity="0.6" font-size="26" font-family="Inter, Arial, sans-serif">vary in sensitivity and cost.</text>
-            <text x="76" y="386" fill="#000B3D" opacity="0.6" font-size="26" font-family="Inter, Arial, sans-serif">Choose the right method</text>
-            <text x="76" y="426" fill="#000B3D" opacity="0.6" font-size="26" font-family="Inter, Arial, sans-serif">based on your research needs.</text>
-
-            <g transform="translate(76 484)">
-              <rect x="0" y="0" width="380" height="240" rx="20" fill="#F5F7FB" stroke="#E1E7F2" stroke-width="1"/>
-              <circle cx="44" cy="56" r="9" fill="#fff" stroke="#000B3D" stroke-width="3"/>
-              <text x="84" y="50" fill="#000B3D" font-size="22" font-weight="800" font-family="Inter, Arial, sans-serif">Lower multiplexing</text>
-              <text x="84" y="82" fill="#000B3D" opacity="0.6" font-size="17" font-family="Inter, Arial, sans-serif">Fewer targets measured</text>
-              <text x="84" y="106" fill="#000B3D" opacity="0.6" font-size="17" font-family="Inter, Arial, sans-serif">simultaneously</text>
-
-              <circle cx="44" cy="160" r="22" fill="#fff" stroke="#000B3D" stroke-width="3"/>
-              <text x="84" y="156" fill="#000B3D" font-size="22" font-weight="800" font-family="Inter, Arial, sans-serif">Higher multiplexing</text>
-              <text x="84" y="188" fill="#000B3D" opacity="0.6" font-size="17" font-family="Inter, Arial, sans-serif">More targets measured</text>
-              <text x="84" y="212" fill="#000B3D" opacity="0.6" font-size="17" font-family="Inter, Arial, sans-serif">simultaneously</text>
-            </g>
-
-            <g transform="translate(540 130)" font-family="Inter, Arial, sans-serif">
-              <line x1="360" y1="8" x2="360" y2="590" stroke="#000B3D" stroke-width="3"/>
-              <line x1="60" y1="300" x2="780" y2="300" stroke="#000B3D" stroke-width="3"/>
-
-              <line x1="30" y1="200" x2="30" y2="545" stroke="#0066FF" stroke-width="3" stroke-dasharray="8 10"/>
-              <path d="M30 200l-13 18M30 200l13 18" fill="none" stroke="#0066FF" stroke-width="3" stroke-linecap="round"/>
-              <text x="-26" y="380" transform="rotate(-90 -26 380)" fill="#0066FF" font-size="26" font-weight="900">Sensitivity</text>
-              <text x="-8" y="184" fill="#000B3D" font-size="18" font-weight="800">High</text>
-              <text x="0" y="582" fill="#000B3D" font-size="18" font-weight="800">Low</text>
-
-              <line x1="98" y1="622" x2="720" y2="622" stroke="#0066FF" stroke-width="3" stroke-dasharray="8 10"/>
-              <path d="M720 622l-18-13M720 622l-18 13" fill="none" stroke="#0066FF" stroke-width="3" stroke-linecap="round"/>
-              <text x="338" y="664" fill="#0066FF" font-size="26" font-weight="900">Cost</text>
-              <text x="42" y="636" fill="#000B3D" font-size="18" font-weight="800">Low</text>
-              <text x="742" y="636" fill="#000B3D" font-size="18" font-weight="800">High</text>
-
-              <circle cx="700" cy="100" r="68" fill="url(#bbHplc)" stroke="#5b8de8" stroke-width="4"/>
-              <text x="678" y="20" fill="#000B3D" font-size="22" font-weight="900">HPLC</text>
-
-              <circle cx="560" cy="220" r="56" fill="url(#bbNmr)" stroke="#FF8A00" stroke-width="4"/>
-              <text x="624" y="232" fill="#000B3D" font-size="22" font-weight="900">NMR</text>
-
-              <circle cx="490" cy="370" r="36" fill="url(#bbRaman)" stroke="#4FB980" stroke-width="4"/>
-              <text x="540" y="382" fill="#000B3D" font-size="22" font-weight="900">Raman</text>
-
-              <circle cx="540" cy="478" r="28" fill="url(#bbFtir)" stroke="#35B8BD" stroke-width="4"/>
-              <text x="582" y="488" fill="#000B3D" font-size="22" font-weight="900">FTIR</text>
-
-              <circle cx="270" cy="220" r="58" fill="url(#bbSers)" stroke="#FF6B35" stroke-width="4"/>
-              <circle cx="270" cy="220" r="74" fill="none" stroke="#FF6B35" stroke-width="2" stroke-dasharray="6 8" opacity="0.6"/>
-              <text x="240" y="228" fill="#FF6B35" font-size="28" font-weight="900">SERS</text>
-
-              <circle cx="220" cy="80" r="10" fill="#FFD2C5" stroke="#FF6B35" stroke-width="3"/>
-              <text x="116" y="116" fill="#000B3D" font-size="18" font-weight="800">Biosensors</text>
-            </g>
-
-            <g class="hover-panel" transform="translate(76 800)">
-              <rect x="0" y="0" width="1384" height="176" rx="20" fill="url(#analysisBottomPanel)" stroke="#E1E7F2"/>
-              <g transform="translate(44 46)">
-                <circle cx="42" cy="42" r="40" fill="#fff9f3" stroke="#FF6B35" stroke-width="5"/>
-                <path d="M18 55 C25 55 25 34 32 34 C39 34 38 55 45 55 C52 55 52 24 60 24 C68 24 67 55 74 55" fill="none" stroke="#FF6B35" stroke-width="4.5" stroke-linecap="round"/>
-              </g>
-              <text x="168" y="78" fill="#000B3D" font-size="30" font-weight="900" font-family="Inter, Arial, sans-serif" letter-spacing="-0.5">SERS balances sensitivity and cost.</text>
-              <text x="168" y="122" fill="#000B3D" opacity="0.65" font-size="24" font-family="Inter, Arial, sans-serif">Fast stress and cell fitness feedback.</text>
-
-              <g transform="translate(790 28)" fill="none" stroke="#0066FF" stroke-width="3" stroke-linecap="round">
-                <path d="M0 112H280M0 112V10"/>
-                <path d="M280 112l-12-8M280 112l-12 8M0 10l-8 12M0 10l8 12"/>
-                <path d="M30 98 C42 98 42 60 54 60 C66 60 65 98 78 98 C92 98 92 80 106 80 C120 80 120 100 136 100 C152 100 152 28 168 28 C184 28 183 96 200 96 C216 96 216 82 232 82 C248 82 248 100 262 100" stroke="#FF6B35" stroke-width="5"/>
-                <path d="M30 104 C64 104 64 99 98 99 C132 99 132 104 166 104 C200 104 200 99 234 99 C252 99 252 104 262 104" stroke="#8b95a1" stroke-width="3" stroke-dasharray="12 12"/>
-                <text x="-20" y="68" transform="rotate(-90 -20 68)" fill="#000B3D" stroke="none" font-size="18" font-weight="800" font-family="Inter, Arial, sans-serif">Intensity</text>
-                <text x="112" y="140" fill="#000B3D" stroke="none" font-size="18" font-weight="800" font-family="Inter, Arial, sans-serif">Raman shift</text>
-              </g>
-
-              <g transform="translate(1088 42)" font-family="Inter, Arial, sans-serif">
-                <line x1="0" y1="12" x2="42" y2="12" stroke="#FF6B35" stroke-width="5" stroke-linecap="round"/>
-                <text x="62" y="20" fill="#000B3D" font-size="18" font-weight="800">SERS spectrum</text>
-                <text x="62" y="46" fill="#000B3D" font-size="18" font-weight="800">(high intensity)</text>
-                <line x1="0" y1="78" x2="42" y2="78" stroke="#8b95a1" stroke-width="3" stroke-dasharray="10 10"/>
-                <text x="62" y="86" fill="#000B3D" font-size="18" font-weight="800">Raman spectrum</text>
-                <text x="62" y="112" fill="#000B3D" font-size="18" font-weight="800">(low intensity)</text>
-              </g>
-            </g>
-          </svg>
-        </article>
-      </div>
-
-      <!-- CTAs -->
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ TECHNOLOGY / CAR-T ============ -->
-  <section id="technology" class="relative py-32 bg-navy text-white overflow-hidden">
-    <div class="relative max-w-[1360px] mx-auto px-8">
-      <!-- Top row: kicker + context -->
-      <div class="reveal flex items-center justify-between mb-16">
-        <div class="flex items-center gap-3">
-          <span class="w-8 h-px bg-orange-brand"></span>
-          <span class="label text-orange-brand">Proprietary technology</span>
-        </div>
-        <span class="label text-white/40 hidden md:inline">Applications / CAR-T monitoring</span>
-      </div>
-
-      <!-- Main grid: copy + cards -->
-      <div class="grid lg:grid-cols-12 gap-16 mb-20">
-        <!-- LEFT: copy -->
-        <div class="lg:col-span-5 reveal">
-          <h2 class="display text-5xl md:text-6xl lg:text-7xl leading-[0.95]">
-            A new fingerprint<br>
-            for <span class="text-orange-brand" style="color: rgb(254, 106, 54)">better CAR-T.</span>
-          </h2>
-          <p class="mt-8 text-white/65 leading-relaxed text-lg max-w-md">
-            SERS enables real-time monitoring of a novel stress and
-            differentiation fingerprint in CAR-T cells.
-          </p>
-          <div class="my-10 w-16 h-px bg-white/25"></div>
-          <p class="text-white/50 italic max-w-md leading-relaxed" style="font-family:'Poppins',sans-serif">
-            Built for bioprocesses. Designed for decisions.
-          </p>
-        </div>
-
-        <!-- RIGHT: 2x2 cards -->
-        <div class="lg:col-span-7 reveal reveal-delay-1 grid sm:grid-cols-2 gap-5">
-          <!-- Card 1 -->
-          <article class="bg-white/[0.04] border border-white/10 rounded-2xl p-7 hover:bg-white/[0.06] hover:border-orange-brand/30 transition-colors">
-            <span class="w-12 h-12 rounded-full bg-orange-brand/15 flex items-center justify-center text-orange-brand mb-6">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>
-            </span>
-            <h3 class="display text-xl mb-2">At-line ready</h3>
-            <p class="text-white/55 text-[15px] leading-relaxed">Seamlessly integrate into your CAR-T workflow.</p>
-          </article>
-
-          <!-- Card 2 -->
-          <article class="bg-white/[0.04] border border-white/10 rounded-2xl p-7 hover:bg-white/[0.06] hover:border-orange-brand/30 transition-colors">
-            <span class="w-12 h-12 rounded-full bg-orange-brand/15 flex items-center justify-center text-orange-brand mb-6">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 17h16"/>
-                <path d="M5.5 14.5 C7 14.5 7 8 8.4 8 C9.8 8 9.8 14.5 11.2 14.5 C12.6 14.5 12.6 10.2 14 10.2 C15.4 10.2 15.4 14.5 16.8 14.5 C18.2 14.5 18.2 6.2 19.5 6.2"/>
-                <path d="M6 20h2.2M10.4 20h2.2M14.8 20H17"/>
-              </svg>
-            </span>
-            <h3 class="display text-xl mb-2">Stress fingerprint</h3>
-            <p class="text-white/55 text-[15px] leading-relaxed">Multiplex bands linked to purine derivatives and glutathione species.</p>
-          </article>
-
-          <!-- Card 3 -->
-          <article class="bg-white/[0.04] border border-white/10 rounded-2xl p-7 hover:bg-white/[0.06] hover:border-orange-brand/30 transition-colors">
-            <span class="w-12 h-12 rounded-full bg-orange-brand/15 flex items-center justify-center text-orange-brand mb-6">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 3C8.5 8 6.5 11.1 6.5 14.2a5.5 5.5 0 0 0 11 0C17.5 11.1 15.5 8 12 3Z"/>
-                <path d="M9.6 14.1a2.4 2.4 0 0 0 4.8 0"/>
-              </svg>
-            </span>
-            <h3 class="display text-xl mb-2">Low volume</h3>
-            <p class="text-white/55 text-[15px] leading-relaxed">Minimal sample. Maximum insight.</p>
-          </article>
-
-          <!-- Card 4 -->
-          <article class="bg-white/[0.04] border border-white/10 rounded-2xl p-7 hover:bg-white/[0.06] hover:border-orange-brand/30 transition-colors">
-            <span class="w-12 h-12 rounded-full bg-orange-brand/15 flex items-center justify-center text-orange-brand mb-6">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 3 19 6v5c0 4.5-2.8 7.7-7 10-4.2-2.3-7-5.5-7-10V6l7-3Z"/>
-                <path d="m9 12 2 2 4-5"/>
-              </svg>
-            </span>
-            <h3 class="display text-xl mb-2">Better decisions</h3>
-            <p class="text-white/55 text-[15px] leading-relaxed">Actionable data to optimize potency and performance.</p>
-          </article>
-        </div>
-      </div>
-
-      <!-- Bottom CTA bar -->
-      <a href="#contact" class="reveal reveal-delay-2 group flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-8 bg-white/[0.04] border border-white/10 rounded-2xl p-7 md:p-8 hover:bg-white/[0.06] hover:border-orange-brand/40 transition-colors">
-        <span class="w-14 h-14 rounded-full bg-orange-brand flex items-center justify-center flex-shrink-0">
-          <svg width="20" height="20" viewBox="0 0 14 14" fill="none"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </span>
-        <div class="flex-1 min-w-0">
-          <div class="display text-xl md:text-2xl mb-1.5">Real-time insights. Smarter decisions. Better CAR-T.</div>
-          <div class="text-white/55 text-[15px]">Monitor what matters. When it matters.</div>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <!-- ============ ECOSYSTEM ============ -->
-  <section id="applications" class="py-32 bg-paper relative">
-    <div class="max-w-[1360px] mx-auto px-8">
-      <!-- Section head -->
-      <div class="grid lg:grid-cols-12 gap-12 mb-20">
-        <div class="lg:col-span-6 reveal">
-          <div class="flex items-center gap-3 mb-5">
-            <span class="w-8 h-px bg-navy/30"></span>
-            <span class="label text-navy/50">The ecosystem</span>
-          </div>
-          <h2 class="display text-5xl md:text-6xl text-navy leading-[0.95]">
-            One platform.<br>
-            <span class="text-navy/40">Smarter control.</span>
-          </h2>
-        </div>
-        <div class="lg:col-span-5 lg:col-start-8 reveal reveal-delay-1 self-end">
-          <p class="text-lg text-navy/60 leading-relaxed">
-            Spectral intelligence and process control built around the
-            NexBio multi-sensor cartridge.
-          </p>
-        </div>
-      </div>
-
-      <!-- Layout: cards (left) + cartridge visual (right) -->
-      <div class="grid lg:grid-cols-12 gap-6">
-        <!-- LEFT: two stacked cards -->
-        <div class="lg:col-span-7 grid gap-6">
-          <!-- Card 01 / Intelligence -->
-          <article class="reveal bg-white rounded-2xl p-8 border border-navy/8 hover:border-blue-brand/40 transition-colors duration-500">
-            <div class="flex items-center justify-between mb-6">
-              <span class="label text-navy/40">01 / Intelligence</span>
-              <span class="w-2 h-2 rounded-full bg-blue-brand"></span>
-            </div>
-            <svg viewBox="0 0 420 150" class="w-full h-32 mb-6" aria-hidden="true">
-              <defs>
-                <linearGradient id="aiLine" x1="0" x2="1">
-                  <stop offset="0" stop-color="#0066FF"/>
-                  <stop offset="1" stop-color="#FF6B35"/>
-                </linearGradient>
-              </defs>
-              <path d="M22 100 C46 34 72 34 96 100 S146 166 174 76 226 24 250 92" fill="none" stroke="#C9D6EE" stroke-width="2"/>
-              <rect x="272" y="43" width="92" height="64" rx="32" fill="#EEF3FF" stroke="#C9D6EE"/>
-              <text x="318" y="84" text-anchor="middle" fill="#000B3D" font-size="24" font-weight="900" font-family="'Poppins',sans-serif">AI</text>
-              <path d="M362 76 H392 M382 66l10 10-10 10" fill="none" stroke="#0066FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M34 116 H130 C166 116 178 116 205 98 S244 72 274 76" fill="none" stroke="url(#aiLine)" stroke-width="5" stroke-linecap="round"/>
-              <circle cx="222" cy="90" r="7" fill="#FF6B35"/>
-            </svg>
-            <h3 class="display text-2xl text-navy mb-3">Predictive intelligence</h3>
-            <p class="text-navy/60 leading-relaxed text-[15px]">
-              Decode spectra into metabolic insight, stress signatures, and
-              actionable process signals.
-            </p>
-          </article>
-
-          <!-- Card 02 / Control -->
-          <article class="reveal reveal-delay-1 bg-white rounded-2xl p-8 border border-navy/8 hover:border-orange-brand/40 transition-colors duration-500">
-            <div class="flex items-center justify-between mb-6">
-              <span class="label text-navy/40">02 / Control</span>
-              <span class="w-2 h-2 rounded-full bg-orange-brand"></span>
-            </div>
-            <svg viewBox="0 0 420 150" class="w-full h-32 mb-6" aria-hidden="true">
-              <circle cx="82" cy="75" r="44" fill="#DFF4F7" stroke="#89CBD4"/>
-              <text x="82" y="81" text-anchor="middle" fill="#000B3D" font-size="13" font-weight="900" font-family="'Poppins',sans-serif">REACTOR</text>
-              <rect x="270" y="43" width="96" height="64" rx="14" fill="#FFF2E8" stroke="#FFD0B0"/>
-              <circle cx="318" cy="75" r="17" fill="none" stroke="#000B3D" stroke-width="2"/>
-              <path d="M318 75v-12M318 75l10 7" stroke="#FF6B35" stroke-width="3" stroke-linecap="round"/>
-              <path d="M130 58 C178 16 224 16 270 58" fill="none" stroke="#0066FF" stroke-width="3" stroke-dasharray="8 8"/>
-              <path d="M270 92 C222 134 176 134 130 92" fill="none" stroke="#FF6B35" stroke-width="3" stroke-dasharray="8 8"/>
-              <path d="M260 52l12 6-12 7M140 98l-12-6 12-7" fill="none" stroke="#000B3D" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <h3 class="display text-2xl text-navy mb-3">Closed-loop control</h3>
-            <p class="text-navy/60 leading-relaxed text-[15px]">
-              Trigger feeding, sampling, and parameter adjustments from live
-              metabolic feedback.
-            </p>
-          </article>
-        </div>
-
-        <!-- RIGHT: plug-and-play platform -->
-        <article class="reveal reveal-delay-2 lg:col-span-5 bg-navy text-white rounded-2xl p-8 flex flex-col relative overflow-hidden">
-          <div class="flex items-center justify-between mb-6">
-            <span class="label text-white/40">03 / Platform</span>
-            <span class="w-2 h-2 rounded-full bg-orange-brand"></span>
-          </div>
-          <div class="flex-1 flex items-center justify-center my-4 relative">
-            <!-- Decorative connector dots -->
-            <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 400" preserveAspectRatio="none" aria-hidden="true">
-              <g stroke="rgba(255,255,255,0.18)" stroke-width="1" fill="none" stroke-dasharray="3 5">
-                <path d="M40 80 L160 200"/>
-                <path d="M360 60 L240 180"/>
-                <path d="M40 340 L170 220"/>
-                <path d="M360 340 L240 220"/>
-              </g>
-              <g fill="rgba(255,107,53,0.7)">
-                <circle cx="40" cy="80" r="3"/>
-                <circle cx="360" cy="60" r="3"/>
-                <circle cx="40" cy="340" r="3"/>
-                <circle cx="360" cy="340" r="3"/>
-              </g>
-            </svg>
-            <img src="assets/nexbio-cartridge.png" alt="NexBio multi-sensor cartridge" class="relative w-full h-auto max-h-[260px] object-contain" style="filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));">
-          </div>
-          <h3 class="display text-2xl mb-3 mt-4">Plug-and-play platform</h3>
-          <p class="text-white/60 leading-relaxed text-[15px]">
-            One cartridge. Any bioreactor. Drop the NexBio sensor into your
-            existing line and start streaming spectral data in minutes —
-            no requalification, no rewiring.
-          </p>
-          <div class="mt-6 pt-6 border-t border-white/10 flex items-center gap-6 text-[13px] text-white/50" style="font-family:'JetBrains Mono',monospace">
-            <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-orange-brand"></span>USB-C</span>
-            <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-orange-brand"></span>OPC-UA</span>
-            <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-orange-brand"></span>SiLA 2</span>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CTA ============ -->
-  <section id="contact" class="py-24 bg-paper">
-    <div class="max-w-[1360px] mx-auto px-8">
-      <div class="relative bg-navy text-white rounded-3xl p-10 md:p-16 overflow-hidden">
-        <div class="relative grid lg:grid-cols-12 gap-10 items-end">
-          <div class="lg:col-span-7">
-            <div class="flex items-center gap-3 mb-5">
-              <span class="w-8 h-px bg-orange-brand"></span>
-              <span class="label text-orange-brand">Get in touch</span>
-            </div>
-            <h2 class="display text-4xl md:text-6xl">
-              Ready to see it<br>
-              <span class="text-white/50">running on your line?</span>
-            </h2>
-          </div>
-          <div class="lg:col-span-5">
-            <p class="text-white/60 leading-relaxed mb-8">
-              We'll walk through integration, qualification, and what a pilot
-              looks like for your process.
-            </p>
-            <div class="flex flex-wrap gap-3">
-              <a href="mailto:contact@prospect-biotech.com" class="inline-flex items-center gap-3 bg-white text-navy pl-6 pr-5 py-4 rounded-full hover:bg-orange-brand hover:text-white transition-colors group">
-                <span class="text-sm font-medium">Book a call</span>
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="group-hover:translate-x-0.5 transition-transform"><path d="M3 7h8m0 0L7.5 3.5M11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg>
-              </a>
-              <a href="#" class="inline-flex items-center gap-2 px-6 py-4 rounded-full border border-white/20 hover:border-white/60 transition-colors text-sm font-medium">
-                Download datasheet
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ FOOTER ============ -->
-  <footer id="company" class="bg-paper border-t border-navy/10 pt-20 pb-10">
-    <div class="max-w-[1360px] mx-auto px-8">
-      <div class="grid md:grid-cols-12 gap-10 mb-16">
-        <div class="md:col-span-5">
-          <div class="mb-6">
-            <img src="assets/prospect-logo.png" alt="Prospect Biotech" class="h-12 w-auto object-contain">
-          </div>
-          <p class="text-navy/60 leading-relaxed max-w-sm">
-            Pioneering the future of bioprocess optimization through photonic
-            sensing and industrial AI.
-          </p>
-        </div>
-        <div class="md:col-span-2">
-          <div class="label text-navy/40 mb-5">Product</div>
-          <ul class="space-y-3 text-navy/80 text-sm">
-            <li><a href="#technology" class="hover:text-blue-brand">Technology</a></li>
-            <li><a href="#applications" class="hover:text-blue-brand">Applications</a></li>
-            <li><a href="#" class="hover:text-blue-brand">Datasheets</a></li>
-          </ul>
-        </div>
-        <div class="md:col-span-2">
-          <div class="label text-navy/40 mb-5">Company</div>
-          <ul class="space-y-3 text-navy/80 text-sm">
-            <li><a href="#" class="hover:text-blue-brand">About</a></li>
-            <li><a href="#" class="hover:text-blue-brand">Careers</a></li>
-            <li><a href="#" class="hover:text-blue-brand">Press</a></li>
-          </ul>
-        </div>
-        <div class="md:col-span-3">
-          <div class="label text-navy/40 mb-5">Get in touch</div>
-          <a href="mailto:contact@prospect-biotech.com" class="block text-navy hover:text-blue-brand text-sm font-medium link-underline">
-            contact@prospect-biotech.com
-          </a>
-          <div class="mt-6 flex gap-2">
-            <a href="#" aria-label="LinkedIn" class="w-10 h-10 rounded-full border border-navy/15 flex items-center justify-center text-navy hover:bg-navy hover:text-white hover:border-navy transition-colors">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22V8zm7.32 0h4.37v1.92h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V22h-4.56v-6.4c0-1.53-.03-3.5-2.13-3.5-2.13 0-2.46 1.66-2.46 3.39V22H7.54V8z"></path></svg>
-            </a>
-            <a href="#" aria-label="X" class="w-10 h-10 rounded-full border border-navy/15 flex items-center justify-center text-navy hover:bg-navy hover:text-white hover:border-navy transition-colors">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z"></path></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pt-8 border-t border-navy/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div class="label text-navy/40">© 2026 Prospect Biotech Solutions S.A. — All rights reserved.</div>
-        <div class="label text-navy/40">Made for bioprocess teams · Bilbao</div>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Reveal on scroll
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-    // Animated counters
-    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-    const counterIO = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        const el = e.target;
-        const target = parseFloat(el.dataset.counter);
-        const decimals = parseInt(el.dataset.decimals || '0', 10);
-        const duration = 1600;
-        const start = performance.now();
-        const tick = (now) => {
-          const t = Math.min(1, (now - start) / duration);
-          const v = target * easeOutCubic(t);
-          el.textContent = decimals > 0 ? v.toFixed(decimals) : Math.round(v).toString();
-          if (t < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-        counterIO.unobserve(el);
-      });
-    }, { threshold: 0.5 });
-    document.querySelectorAll('[data-counter]').forEach(el => counterIO.observe(el));
-
-    // Nav scroll state
-    const nav = document.getElementById('nav');
-    const navInner = document.getElementById('navInner');
-    const navLogo = document.getElementById('navLogo');
-    const onScroll = () => {
-      const scrolled = window.scrollY > 30;
-      if (scrolled) {
-        nav.classList.add('bg-paper/80', 'backdrop-blur-xl', 'border-b', 'border-navy/8');
-        navInner.classList.remove('h-32');
-        navInner.classList.add('h-16');
-        navLogo.classList.remove('h-24');
-        navLogo.classList.add('h-10');
-      } else {
-        nav.classList.remove('bg-paper/80', 'backdrop-blur-xl', 'border-b', 'border-navy/8');
-        navInner.classList.add('h-32');
-        navInner.classList.remove('h-16');
-        navLogo.classList.add('h-24');
-        navLogo.classList.remove('h-10');
-      }
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  </script>
-
-  <!-- ============ TWEAKS PANEL ============ -->
-  <div id="tweaks-panel">
-    <div class="tw-head">
-      <div class="tw-title">Tweaks</div>
-      <button class="tw-close" data-tw-close aria-label="Close">×</button>
-    </div>
-
-    <div class="tw-section">
-      <div class="tw-label">Mood</div>
-      <div class="tw-seg cols-3" data-tw-group="mood">
-        <button class="tw-opt" data-tw-value="atelier">Atelier</button>
-        <button class="tw-opt" data-tw-value="clinical">Clinical</button>
-        <button class="tw-opt" data-tw-value="dark">Lab Dark</button>
-      </div>
-    </div>
-
-    <div class="tw-section">
-      <div class="tw-label">Display Type</div>
-      <div class="tw-seg cols-3" data-tw-group="type">
-        <button class="tw-opt" data-tw-value="bold">Bold</button>
-        <button class="tw-opt" data-tw-value="editorial">Editorial</button>
-        <button class="tw-opt" data-tw-value="technical">Technical</button>
-      </div>
-    </div>
-
-    <div class="tw-section">
-      <div class="tw-label">Headline Accent</div>
-      <div class="tw-seg cols-3" data-tw-group="accent">
-        <button class="tw-opt" data-tw-value="gradient">Gradient</button>
-        <button class="tw-opt" data-tw-value="highlight">Highlight</button>
-        <button class="tw-opt" data-tw-value="outlined">Outlined</button>
-      </div>
-    </div>
+    <div class="tier mono">And beyond</div>
+    <article class="card" style="--k:var(--c-drug)"><div class="row"><span class="num mono">04</span><span class="tag mono">Custom panels</span></div><h3>See what your cells receive.</h3><h4>Drugs &amp; key factors</h4><p>And how they respond.</p><div class="uses"><span>New therapy development</span><span>Cell differentiation</span></div></article>
   </div>
-  <button id="tweaks-toggle" aria-label="Open tweaks">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-  </button>
+</div></section>
 
-  <script>
-    (function(){
-      const TWEAKS = /*EDITMODE-BEGIN*/{
-        "mood": "atelier",
-        "type": "bold",
-        "accent": "gradient"
-      }/*EDITMODE-END*/;
+<section id="applications" style="padding-top:0"><div class="wrap">
+  <div class="sec-head"><div class="eyebrow mono">Applications</div><h2>Where it <span class="acc">works today.</span></h2></div>
+  <div class="app-grid">
+    <article class="app" style="--k:var(--c-pur)"><span class="num mono">01</span><h3>Cell death</h3><p>High-throughput mechanisms. Real-time feedback.</p></article>
+    <article class="app" style="--k:var(--c-thi)"><span class="num mono">02</span><h3>Contamination</h3><p>Caught early, before the batch is lost.</p></article>
+    <article class="app" style="--k:var(--c-drug)"><span class="num mono">03</span><h3>Cell differentiation</h3><p>Follow iPSCs as they become something new.</p></article>
+  </div>
+</div></section>
 
-      const body = document.body;
-      const panel = document.getElementById('tweaks-panel');
-      const toggleBtn = document.getElementById('tweaks-toggle');
-      let panelEnabled = false;
+<section class="future" id="future"><div class="wrap">
+  <div><div class="eyebrow mono">Future</div><h2>Process development for <span class="acc">ATMPs.</span></h2></div>
+  <div class="side">
+    <p>Advanced therapies need live metabolic control. That's where we're going.</p>
+    <div class="flag"><span class="mono" style="color:var(--mute)">Spearhead</span><strong>CAR-T</strong><span class="tag mono">Next</span></div>
+    <a class="flag" href="#contact"><strong>And what about Prospect Health?</strong><span class="tag mono" style="color:var(--c-drug);border-color:var(--c-drug)">Soon</span></a>
+  </div>
+</div></section>
 
-      function apply(state) {
-        body.setAttribute('data-mood', state.mood);
-        body.setAttribute('data-type', state.type);
-        body.setAttribute('data-accent', state.accent);
-        document.querySelectorAll('[data-tw-group]').forEach(group => {
-          const key = group.getAttribute('data-tw-group');
-          group.querySelectorAll('.tw-opt').forEach(btn => {
-            btn.classList.toggle('active', btn.getAttribute('data-tw-value') === state[key]);
-          });
-        });
-      }
+<section id="platform"><div class="wrap">
+  <div class="sec-head"><div class="eyebrow mono">The platform</div><h2>Simple by <span class="acc">design.</span></h2></div>
+  <div class="kit">
+    <div class="part"><span class="mono">Sample</span><div class="big">1 µL</div><h3>That's all we need.</h3><p>From your culture, straight in.</p></div>
+    <div class="part"><span class="mono">Consumables</span><div class="big">Single use</div><h3>Disposable cartridges.</h3><p>Clean, fast, no carry-over.</p></div>
+    <div class="part inst"><span class="mono">Instrument</span><div class="big"><span>Bench today.<br><span class="acc">At-line next.</span></span></div><h3>The Prospect machine.</h3><p>A great fit for automated labs now; at-line in your bioprocess next.</p><a class="price mono" href="#contact">Ask for the price →</a></div>
+    <div class="part ai"><span class="mono">AI</span><div class="big">To anticipate the unexpected.</div><h3>Learns your process.</h3><p>Adapts to your cell type, medium and experiments.</p></div>
+  </div>
+</div></section>
 
-      function setKey(key, value) {
-        TWEAKS[key] = value;
-        apply(TWEAKS);
-        try {
-          window.parent.postMessage({type: '__edit_mode_set_keys', edits: {[key]: value}}, '*');
-        } catch (e) {}
-      }
+<section class="rd" id="rd" style="padding-top:0"><div class="wrap">
+  <div><div class="eyebrow mono">The engine of our science</div><h2>Automated <span class="acc">R&amp;D.</span></h2><p>We test new sensors and new combinations, nonstop. Every cycle reaches more molecules, with more sensitivity.</p></div>
+  <div class="matrix-box" aria-hidden="true">
+    <div class="matrix-top mono"><span>Sensors × molecules</span><span style="color:var(--c-thi)">● running</span></div>
+    <div class="matrix" id="matrix"></div>
+    <div class="matrix-foot mono"><span>Screening</span><span>Hits</span></div>
+  </div>
+</div></section>
 
-      // Wire option buttons
-      document.querySelectorAll('[data-tw-group]').forEach(group => {
-        const key = group.getAttribute('data-tw-group');
-        group.querySelectorAll('.tw-opt').forEach(btn => {
-          btn.addEventListener('click', () => setKey(key, btn.getAttribute('data-tw-value')));
-        });
-      });
+<section class="contact" id="contact"><div class="wrap">
+  <div class="eyebrow mono">Get in touch</div>
+  <h2>Ready to see it running on <span class="acc">your line?</span></h2>
+  <p>Let's plan a pilot on your process.</p>
+  <div class="ctas"><a class="btn pri" href="mailto:contact@prospect-biotech.com">Book a call</a><a class="btn" href="#">Download datasheet</a></div>
+</div></section>
 
-      // Close button
-      panel.querySelector('[data-tw-close]').addEventListener('click', () => {
-        panel.classList.remove('open');
-        if (panelEnabled) toggleBtn.classList.add('show');
-        try { window.parent.postMessage({type: '__edit_mode_dismissed'}, '*'); } catch (e) {}
-      });
-      toggleBtn.addEventListener('click', () => {
-        panel.classList.add('open');
-        toggleBtn.classList.remove('show');
-      });
+<footer id="company"><div class="wrap">
+  <div class="top">
+    <div><img src="assets/prospect-logo.png" alt="Prospect Biotech"><p style="max-width:34ch">Pioneering the future of bioprocess optimization through photonic sensing and industrial AI.</p></div>
+    <div><h5>Product</h5><ul><li><a href="#platform">Platform</a></li><li><a href="#applications">Applications</a></li><li><a href="#">Datasheets</a></li></ul></div>
+    <div><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li></ul></div>
+    <div><h5>Get in touch</h5><ul><li><a href="mailto:contact@prospect-biotech.com">contact@prospect-biotech.com</a></li></ul></div>
+  </div>
+  <div class="bot"><span>© 2026 Prospect Biotech Solutions S.A. — All rights reserved.</span><span>Made for bioprocess teams · Bilbao</span></div>
+</div></footer>
 
-      // Apply initial state (always — themes work even with panel closed)
-      apply(TWEAKS);
+<script>
+// Shrink the nav logo once the page is scrolled.
+(()=>{const f=()=>document.documentElement.classList.toggle('scrolled',scrollY>40);addEventListener('scroll',f,{passive:true});f()})();
 
-      // Host protocol
-      window.addEventListener('message', (e) => {
-        const msg = e.data || {};
-        if (msg.type === '__activate_edit_mode') {
-          panelEnabled = true;
-          panel.classList.add('open');
-          toggleBtn.classList.remove('show');
-        } else if (msg.type === '__deactivate_edit_mode') {
-          panelEnabled = false;
-          panel.classList.remove('open');
-          toggleBtn.classList.remove('show');
-        }
-      });
-      try {
-        window.parent.postMessage({type: '__edit_mode_available'}, '*');
-      } catch (e) {}
-    })();
-  </script>
+// Hero: drifting cells that release metabolites, with a live spectrum drawn around a ring.
+(()=>{
+const cv=document.getElementById('cells'),ctx=cv.getContext('2d');let W,H,C={};
+const css=()=>{const s=getComputedStyle(document.documentElement);['line','c-base','c-pur','c-thi','c-drug'].forEach(k=>C[k]=s.getPropertyValue('--'+k).trim());const L=C['c-pur'].match(/oklch\(([\d.]+) ([\d.]+)/);C['c-m1']=`oklch(${L[1]} ${L[2]} 20)`;C['c-m2']=`oklch(${L[1]} ${L[2]} 230)`};
+const size=()=>{const d=devicePixelRatio||1,r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0)};
+css();size();addEventListener('resize',size);
+const R=(a,b)=>a+Math.random()*(b-a);
+const cells=Array.from({length:11},()=>({x:R(.3,.7),y:R(.3,.7),r:R(.055,.095),vx:R(-1,1)*.00012,vy:R(-1,1)*.00012,ph:R(0,6.28),s:0,t:0,cd:0}));
+const parts=[],KS=['pur','thi','drug','m1','m2'];
+const PK={base:[[.12,.3],[.32,.5],[.47,.4],[.75,.35]],pur:[[.24,1],[.66,.7],[.86,.5]],thi:[[.19,.8],[.45,.5],[.58,.6]],drug:[[.43,.9],[.55,.4],[.9,.7]],m1:[[.08,.6],[.38,.8],[.7,.5]],m2:[[.29,.6],[.52,.7],[.81,.9]]};
+const amp={base:1,pur:.1,thi:.1,drug:.1,m1:.1,m2:.1};
+const gs=(u,mu)=>Math.exp(-((u-mu)**2)/(2*.012*.012));
+const val=(k,u)=>{let y=0;for(const[mu,a]of PK[k])y+=a*gs(u,mu);return y*amp[k]};
+let last=0,next=800;
+const bd=.26;
+function step(t){
+ const dt=Math.min(50,t-last);last=t;ctx.clearRect(0,0,W,H);
+ if(t>next){const c=cells[Math.floor(Math.random()*cells.length)];if(!c.t){c.t=1;c.cd=R(3000,5000)}next=t+R(1200,2400)}
+ if(Math.random()<.5)parts.push({x:R(0,1),y:R(0,1),vx:R(-1,1)*.00004,vy:R(-1,1)*.00004,life:R(4000,7000),age:0,k:'c-base',r:R(1,1.8)});
+ for(const k of KS)amp[k]=Math.max(.08,amp[k]*.994);
+ for(const c of cells){
+  c.x+=c.vx*dt;c.y+=c.vy*dt;const dx=c.x-.5,dy=c.y-.5;
+  if(Math.abs(dx)>bd&&dx*c.vx>0)c.vx*=-1;if(c.x>.47&&c.vx>0)c.vx*=-1;if(Math.abs(dy)>bd&&dy*c.vy>0)c.vy*=-1;
+  if(c.t){c.cd-=dt;if(c.cd<0)c.t=0}
+  c.s+=((c.t?1:0)-c.s)*.03;
+  if(c.s>.3&&Math.random()<c.s*.28){const a=R(0,6.28),k=KS[Math.floor(Math.random()*5)],rr=c.r*Math.min(W,H);amp[k]=Math.min(1.4,amp[k]+.02);parts.push({x:c.x+Math.cos(a)*rr/W,y:c.y+Math.sin(a)*rr/H,vx:Math.cos(a)*R(.00006,.0002),vy:Math.sin(a)*R(.00006,.0002),life:R(2200,4200),age:0,k:'c-'+k,r:R(1.4,2.6)})}
+ }
+ for(let i=parts.length-1;i>=0;i--){const p=parts[i];p.age+=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;if(p.age>p.life){parts.splice(i,1);continue}
+  const a=Math.sin(Math.PI*p.age/p.life);ctx.globalAlpha=a*(p.k==='c-base'?.35:.9);ctx.fillStyle=C[p.k];ctx.beginPath();ctx.arc(p.x*W,p.y*H,p.r,0,6.28);ctx.fill()}
+ const mn=Math.min(W,H);
+ for(const c of cells){
+  const rr=c.r*mn,cx=c.x*W,cy=c.y*H,col=c.s>.05?C['c-pur']:C['c-base'];
+  ctx.beginPath();for(let i=0;i<=48;i++){const a=i/48*6.283,w=1+.05*Math.sin(a*3+t/700+c.ph)+.035*Math.sin(a*5-t/500)+c.s*.05*Math.sin(a*7+t/120);const x=cx+Math.cos(a)*rr*w,y=cy+Math.sin(a)*rr*w;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}
+  ctx.closePath();ctx.globalAlpha=.06+c.s*.1;ctx.fillStyle=col;ctx.fill();
+  ctx.globalAlpha=.35+c.s*.6;ctx.strokeStyle=col;ctx.lineWidth=1.2+c.s;ctx.stroke();
+  ctx.globalAlpha=.25+c.s*.4;ctx.beginPath();ctx.arc(cx+rr*.15*Math.sin(c.ph+t/3000),cy+rr*.1,rr*.3,0,6.28);ctx.fillStyle=col;ctx.fill();
+  if(c.s>.05){ctx.globalAlpha=c.s*.35;ctx.beginPath();ctx.arc(cx,cy,rr*(1.25+.25*Math.sin(t/200)),0,6.28);ctx.strokeStyle=C['c-pur'];ctx.lineWidth=1;ctx.stroke()}
+ }
+ // Spectrum ring: one trace per analyte family, wrapped around the left half of the circle.
+ const R0=mn*.39,S=mn*.07,N=220;
+ ctx.globalAlpha=.4;ctx.strokeStyle=C.line;ctx.lineWidth=1;ctx.beginPath();ctx.arc(W/2,H/2,R0,0,6.28);ctx.stroke();
+ for(const k of ['base',...KS]){
+  ctx.beginPath();ctx.globalAlpha=k==='base'?.5:.95;ctx.strokeStyle=C['c-'+k];ctx.lineWidth=k==='base'?1:1.6;
+  for(let i=0;i<=N;i++){const u=i/N,y=val(k,u)*(1+.04*Math.sin(t/300+i*.3)),a=1.5708+u*3.1416,r=R0+y*S,x=W/2+Math.cos(a)*r,yy=H/2+Math.sin(a)*r;i?ctx.lineTo(x,yy):ctx.moveTo(x,yy)}
+  ctx.stroke()}
+ ctx.globalAlpha=1;requestAnimationFrame(step)}
+requestAnimationFrame(step);
 
+// Automated R&D: sensor × molecule screening matrix.
+const m=document.getElementById('matrix'),ks=['--c-pur','--c-thi','--c-drug'],cellsM=[];
+for(let i=0;i<24*8;i++){const e=document.createElement('i');e.style.setProperty('--k',`var(${ks[Math.floor(Math.random()*3)]})`);m.appendChild(e);cellsM.push(e)}
+setInterval(()=>{for(let n=0;n<3;n++){const e=cellsM[Math.floor(Math.random()*cellsM.length)];if(e.classList.contains('l')){e.classList.replace('l','d')}else if(!e.classList.contains('d')){e.classList.add('l');setTimeout(()=>e.classList.replace('l','d'),1600)}}
+ if(m.querySelectorAll('.d').length>110)m.querySelectorAll('.d').forEach(e=>Math.random()<.4&&e.classList.remove('d'))},180);
 
-</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
+// What we measure: highlight the card in the middle of the viewport (or under the pointer).
+const cards=[...document.querySelectorAll('.card')];
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)cards.forEach(c=>c.classList.toggle('on',c===e.target))}),{rootMargin:'-45% 0px -45% 0px'});
+cards.forEach(c=>{io.observe(c);c.addEventListener('mouseenter',()=>cards.forEach(x=>x.classList.toggle('on',x===c)))});
+})();
+</script>
+</body>
+</html>
